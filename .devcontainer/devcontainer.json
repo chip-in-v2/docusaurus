@@ -1,0 +1,25 @@
+{
+    "name": "lambda-deployer",
+    "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash",
+                "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": true,
+                "editor.formatOnSave": true
+            },
+            "extensions": [
+                "esbenp.prettier-vscode",
+                "rvest.vs-code-prettier-eslint",
+                "hediet.vscode-drawio",
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+    "postCreateCommand": "npm install"
+}

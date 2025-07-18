@@ -1,0 +1,53 @@
+realm:
+  name: "master"
+  title: "Master Realm"
+  description: "Master realm for development purposes"
+  disabled: false
+  cacert: "${MASTER_CA_CERT}"
+  signingKey: "${MASTER_REALM_SIGNING_KEY}"
+zones:
+  - zone: "${DEFAULT_ZONE_DOMAIN}"
+    realm: "master"
+    title: "Default Zone"
+    description: "Default zone for the master realm"
+    dnsProvider: "default-dns-provider"
+    acmeCertificateProvider: "https://acme-v02.api.letsencrypt.org/directory"
+subdomains:
+  - name: "master"
+    title: "Master Subdomain"
+    description: "Subdomain for the master realm"
+    zone: "urn:chip-in:zone:master:${DEFAULT_ZONE_DOMAIN}"
+virtualHosts:
+  - name: "www"
+    title: "Homepage Virtual Host"
+    routingChain: homepageChain
+    subdomain: "urn:chip-in:subdomain:master:master"
+    description: "Virtual host for the homepage"
+routingChains:
+  - name: homepageChain
+    title: "Homepage Routing Chain"
+    description: "Routing chain for the homepage"
+    urn: "urn:chip-in:routing-chain:master:homepageChain"
+    rules:
+      - match: "true"
+        action:
+          type: "proxy"
+          target: "urn:chip-in:service:master:www-contents"
+hubs:
+  - name: "masterHub"
+    title: "Master Hub"
+    description: "Hub for the master realm"
+    urn: "urn:chip-in:hub:master:masterHub"
+    fqdn: "hub.master.${DEFAULT_ZONE_DOMAIN}"
+    serverCert: "${MASTER_HUB_SERVER_CERT}"
+    serverCertKey: "${MASTER_HUB_SERVER_CERT_KEY}"
+services:
+  - name: www-contents
+    urn: urn:chip-in:service:master:www-contents
+    title: "Homepage contents service for the SaaS"
+    realm: urn:chip-in:realm:master
+    hubName: masterHub
+    providers:
+      - urn:chip-in:end-point:hub.master.${DEFAULT_ZONE_DOMAIN}:www-contents-server
+    consumers:
+      - urn:chip-in:end-point:hub.master.${DEFAULT_ZONE_DOMAIN}:api-gateway
