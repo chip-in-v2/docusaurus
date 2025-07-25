@@ -7,7 +7,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "clear-doc": "chip-in-docusaurus clear",
+        "clear-doc": "chip-in-docusaurus clear && rm -rf .chip-in-docusaurus",
         "build-doc": "chip-in-docusaurus build --out-dir ../build",
         "start-doc": "chip-in-docusaurus start"
     },

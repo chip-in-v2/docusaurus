@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  packages: read
 
 jobs:
   deploy:
@@ -19,16 +20,27 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-node@v3
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          # This sets the scope for your organization's packages
+          scope: '@${{ github.repository_owner }}'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Repositories
         id: get-repos
         run: |
           echo "Fetching repositories from ${{ github.repository_owner }} organization..."
-          REPOS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/${{ github.repository_owner }}/repos" | jq -r '.[].name' | xargs)
+          REPOS=$(curl -s -H "Authorization: token ${{ secrets.PAT_FOR_DISPATCH }}" "https://api.github.com/orgs/${{ github.repository_owner }}/repos" | jq -r '.[].name' | xargs)
           echo "::set-output name=repos::$REPOS"
 
       - name: Download Docs Zips
@@ -39,15 +51,15 @@ jobs:
           mkdir -p docs-source
           for repo in ${{ steps.get-repos.outputs.repos }}; do
             echo "Processing repository: $repo"
-            RELEASE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository_owner }}/$repo/releases/latest")
+            RELEASE=$(curl -s -H "Authorization: token ${{ secrets.PAT_FOR_DISPATCH }}" "https://api.github.com/repos/${{ github.repository_owner }}/$repo/releases/latest")
             if [ $(echo "$RELEASE" | jq -r '.status') = "404" ]; then
               echo "No released asset"
             else
               ASSET_ID=$(echo "$RELEASE" | jq -r '.assets[] | select(.name == "docs.zip") | .id')
               if [ -n "$ASSET_ID" ]; then
                 echo "Found docs.zip in $repo"
-                curl -s -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/octet-stream" "https://api.github.com/repos/${{ github.repository_owner }}/$repo/releases/assets/$ASSET_ID" > docs-source/$repo.zip
-                unzip -o docs-source/$repo.zip -d docs
+                curl -s -L -H "Authorization: token ${{ secrets.PAT_FOR_DISPATCH }}" -H "Accept: application/octet-stream" "https://api.github.com/repos/${{ github.repository_owner }}/$repo/releases/assets/$ASSET_ID" > docs-source/$repo.zip
+                unzip -o docs-source/$repo.zip
                 rm docs-source/$repo.zip
               else
                 echo "docs.zip not found in $repo"
@@ -57,7 +69,10 @@ jobs:
           echo "All repositories processed, then building the website..."
           export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           echo "Build date: $BUILD_DATE"
+          npm run build-pdf
           npm run build-doc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

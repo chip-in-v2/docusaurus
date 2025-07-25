@@ -26,17 +26,13 @@ jobs:
           node-version: '22'
           cache: 'npm'
           registry-url: 'https://npm.pkg.github.com'
+          # This sets the scope for your organization's packages
           scope: '@${{ github.repository_owner }}'
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund --ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Configure npm for GitHub Packages
-        run: |
-          echo "@${{ github.repository_owner }}:registry=https://npm.pkg.github.com" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
       
       - name: GitHub Packages にパッケージを公開
         run: npm publish --tag rc --workspace=packages/docusaurus

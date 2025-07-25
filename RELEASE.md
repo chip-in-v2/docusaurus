@@ -18,7 +18,7 @@ Codespaces で修正
 Codespaces のターミナルで以下を実行して package.json を編集し、タグをつける。
 
 ```sh
-(cd packages/docusaurus && npm version prerelease --preid rc)
+(cd /workspaces/chip-in-v2/packages/docusaurus && npm version prerelease --no-git-tag-version --preid rc)
 ```
 
 ## 4. 単体テスト

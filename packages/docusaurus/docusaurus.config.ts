@@ -59,7 +59,7 @@ const filteredItems = originalItems.filter((item) => {
 
 const config: Config = {
     title: "Chip-in V2",
-    tagline: "マイクロサービス基盤",
+    tagline: "マイクロサービス基盤 Chip-in V2",
     favicon: "img/favicon.ico",
 
     // Set the production url of your site here
@@ -132,6 +132,19 @@ const config: Config = {
                 src: "img/chip-in-logo-text.png",
             },
             items: filteredItems,
+        },
+        footer: {
+            style: "dark",
+            copyright: `Copyright © ${new Date().getFullYear()} Procube Co,Ltd. Built on ${new Date(
+                process.env.BUILD_DATE || new Date().toISOString(),
+            ).toLocaleString("ja-JP", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "Asia/Tokyo",
+            })}.`,
         },
         prism: {
             theme: prismThemes.github,
