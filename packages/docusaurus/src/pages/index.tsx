@@ -13,7 +13,9 @@ const chipinSection = (
         <canvas id="hero-canvas" className={styles.heroCanvas}></canvas>
         <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>分散マイクロサービス基盤</h1>
-            <p className={styles.heroSubtitle}>小さなリソースを持ち寄り、巨大なシステムを構築する</p>
+            <p className={styles.heroSubtitle}>
+                オンデマンドでマイクロサービスを<b>持ち寄り</b>、強固で巨大なシステムを構築する
+            </p>
         </div>
     </div>
 )

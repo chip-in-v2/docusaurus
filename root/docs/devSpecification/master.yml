@@ -8,6 +8,7 @@ realm:
 zones:
   - zone: "${DEFAULT_ZONE_DOMAIN}"
     realm: "master"
+    urn: "urn:chip-in:zone:master:${DEFAULT_ZONE_DOMAIN}"
     title: "Default Zone"
     description: "Default zone for the master realm"
     dnsProvider: "default-dns-provider"
@@ -15,11 +16,14 @@ zones:
 subdomains:
   - name: "master"
     title: "Master Subdomain"
+    urn: "urn:chip-in:subdomain:master:master"
     description: "Subdomain for the master realm"
     zone: "urn:chip-in:zone:master:${DEFAULT_ZONE_DOMAIN}"
 virtualHosts:
   - name: "www"
     title: "Homepage Virtual Host"
+    realm: "urn:chip-in:realm:master"
+    urn: "urn:chip-in:virtual-host:master:www"
     routingChain: homepageChain
     subdomain: "urn:chip-in:subdomain:master:master"
     description: "Virtual host for the homepage"
@@ -27,6 +31,7 @@ routingChains:
   - name: homepageChain
     title: "Homepage Routing Chain"
     description: "Routing chain for the homepage"
+    realm: "urn:chip-in:realm:master"
     urn: "urn:chip-in:routing-chain:master:homepageChain"
     rules:
       - match: "true"
@@ -37,6 +42,7 @@ hubs:
   - name: "masterHub"
     title: "Master Hub"
     description: "Hub for the master realm"
+    realm: "urn:chip-in:realm:master"
     urn: "urn:chip-in:hub:master:masterHub"
     fqdn: "hub.master.${DEFAULT_ZONE_DOMAIN}"
     serverCert: "${MASTER_HUB_SERVER_CERT}"
@@ -44,10 +50,9 @@ hubs:
 services:
   - name: www-contents
     urn: urn:chip-in:service:master:www-contents
+    hub: "urn:chip-in:hub:master:masterHub"
     title: "Homepage contents service for the SaaS"
     realm: urn:chip-in:realm:master
-    hubName: masterHub
-    providers:
-      - urn:chip-in:end-point:hub.master.${DEFAULT_ZONE_DOMAIN}:www-contents-server
+    provider: "urn:chip-in:end-point:hub.master.${DEFAULT_ZONE_DOMAIN}:www-contents-server"
     consumers:
       - urn:chip-in:end-point:hub.master.${DEFAULT_ZONE_DOMAIN}:api-gateway

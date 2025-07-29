@@ -11,12 +11,21 @@
                 "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
                 "editor.formatOnType": false,
                 "editor.formatOnPaste": true,
+                "yaml.schemas": {
+                    "https://json.schemastore.org/github-workflow.json": [
+                        "/.github/workflows/deploy.yml",
+                    ],
+                    "file:///workspaces/docusaurus/root/openapi/inventory/realm-definition.yaml": [
+                        "/docs/devSpecification/master.yml"
+                    ]
+                },
                 "editor.formatOnSave": true
             },
             "extensions": [
                 "esbenp.prettier-vscode",
                 "rvest.vs-code-prettier-eslint",
                 "hediet.vscode-drawio",
+                "redocly.openapi-vs-code",
                 "redhat.vscode-yaml"
             ]
         }

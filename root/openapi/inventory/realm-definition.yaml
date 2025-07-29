@@ -39,6 +39,6 @@ properties:
     items:
       $ref: './index.openapi.yaml#/components/schemas/Service'
     description: |-
-      レルムに属するサービスのリスト。各サービスは、サービスの名前、URN、タイトル、説明、提供者、利用者などの情報を含む。 
+      レルムに属するサービスのリスト。各サービスは、サービスの名前、URN、タイトル、説明、提供者、利用者などの情報を含む。
 additionalProperties: false
 

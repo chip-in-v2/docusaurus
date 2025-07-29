@@ -1375,6 +1375,13 @@ components:
           type: string
           description: レルムの説明文です。
           example: CMSシステムのレルムです。
+        urn:
+          type: string
+          readOnly: true
+          format: urn
+          description: |-
+            レルムのURN。形式は `urn:chip-in:realm:{realm-name}` である。
+          example: urn:chip-in:realm:example-realm
         cacert:
           type: string
           description: |-
@@ -1452,6 +1459,13 @@ components:
           format: urn
           description: |-
             ゾーンが属するレルムの名前。
+        urn:
+          type: string
+          readOnly: true
+          format: urn
+          description: |-
+            ゾーンのURN。形式は `urn:chip-in:zone:{realm-name}:{zone-name}` である。
+          example: urn:chip-in:zone:example-realm:example.com
         dnsProvider:
           type: string
           description: |-
@@ -1477,7 +1491,7 @@ components:
       properties:
         name:
           type: string
-          pattern: '^[a-z0-9][a-z0-9-]*$'
+          pattern: '^([a-z0-9][a-z0-9-]*|@)$'
           description: |-
             サブドメインの名前。ゾーン名と結合して FQDN を得ることができる。
             文字列は小文字英字、数字、ハイフンのみを含むことができる。
@@ -1485,6 +1499,7 @@ components:
             たとえば、 stg というサブドメイン名でゾーンの名前が example.com の場合、
             stg.example.com というサブドメインを構成し、www.stg.example.com, login.stg.example.com  というような
             FQDN の仮想ホストを収容することができる。
+            特別なサブドメイン名 "@" は、ゾーンのFQDNそのものを表し、ゾーン直下の仮想ホストを収容する。
           example: stg
         fqdn:
           type: string
@@ -1504,6 +1519,13 @@ components:
             ゾーンは、サブドメインのFQDNのサフィックスとして使用される。
             たとえば、 stg.example.com の場合、ゾーンは example.com となる。
           example: urn:chip-in:zone:example-realm:example.com
+        urn:
+          type: string
+          readOnly: true
+          format: urn
+          description: |-
+            サブドメインのURN。形式は `urn:chip-in:subdomain:{realm-name}:{zone-name}:{subdomain-name}` である。
+          example: urn:chip-in:subdomain:example-realm:example.com:stg
         title:
           type: string
           description: サブドメインの名称です。
@@ -1531,6 +1553,10 @@ components:
 
     VirtualHost:
       type: object
+      description: |-
+        仮想ホストは、特定のサブドメインに紐づくFQDNを持つWebサービスのエンドポイントであり、API Gateway内でリクエストを処理するためのルーティングチェーンと関連付けられる。
+        各仮想ホストは、特定のサブドメインに属し、そのサブドメイン内で一意の名前を持つ。
+        仮想ホストは、HTTPS通信を行うための証明書と秘密鍵を持ち、セキュアな通信を提供する。
       required:
         - name
         - title
@@ -1539,10 +1565,12 @@ components:
       properties:
         name:
           type: string
+          pattern: '^([a-z0-9][a-z0-9-]*|@)$'
           description: |-
             仮想ホストの名前。指定したサブドメインの名前と結合して FQDN を得ることができる。
+            文字列は小文字英字、数字、ハイフンのみを含むことができる。
             たとえば、 www という仮想ホスト名でサブドメインの FQDN が example.com の場合、FQDN は www.example.com となる。
-            "@" はサブドメインのFQDN そのものを仮想ホストの FQDN とすることを表す。
+            特別なホスト名 "@" はサブドメインのFQDN そのものを仮想ホストの FQDN とすることを表す。
           example: www.stg
         title:
           type: string
@@ -1559,6 +1587,13 @@ components:
           description: |-
             この仮想ホストが属するレルムのURN。
           example: urn:chip-in:realm:example-realm
+        urn:
+          type: string
+          readOnly: true
+          format: urn
+          description: |-
+            仮想ホストのURN。形式は `urn:chip-in:virtual-host:{realm-name}:{virtual-host-name}` である。
+          example: urn:chip-in:virtual-host:example-realm:www
         subdomain:
           type: string
           description: |-
@@ -1626,6 +1661,7 @@ components:
         urn:
           type: string
           readOnly: true
+          format: urn
           description: |-
             ルーティングチェーンのurn。
           example: urn:chip-in:routing-chain:example-realm:cms-chain
@@ -1891,8 +1927,7 @@ components:
         - urn
         - title
         - realm
-        - hubName
-        - providers
+        - provider
         - consumers
       type: object
       properties:
@@ -1933,12 +1968,6 @@ components:
           type: string
           description: |-
             サービスが属するレルムの名前。
-        hubName:
-          type: string
-          description: |-
-            サービスが接続される SPN Hub の名前。
-            SPN Hub は、サービスの提供を行うためのネットワークハブであり、サービスへのアクセスを管理する。
-          example: hub1
         availabilityManagement:
           type: object
           required:
@@ -1967,15 +1996,22 @@ components:
             idelTimeout:
               type: integer
               description: 通信がない状態が一定時間続くとマイクロ。 ondemadStart が true の場合のみ有効
-        providers:
-          type: array
-          items:
-            type: string
+        singleton:
+          type: boolean
+          description: |-
+            このサービスはシングルトンであるかどうかを示すフラグ。
+            true の場合、サービスはシングルトンであり、SPN Hub は2個目のサービスの接続を受け付けない。
+            false の場合、SPN Hub は複数のセッションを受け付け、コネクションごとに付加分散して接続する。
+            Consumer から接続があった際に最も接続数の少ないサービスに接続する。
+            Provider は分散重み付を変更することができる。
+            ローリングアップデート時は重み付を0に変更してからグレースフルシャットダウンを行うことで、無停止でのアップデートが可能となる。
+          example: true
+        provider:
+          type: string
           description: |-
             当該サービスの提供が許可されるエンドポイント
             クライアント証明書の Subject の値と照合される
-          example:
-            - oidc-authz-provider
+          example: oidc-authz-provider
         consumers:
           type: array
           items:

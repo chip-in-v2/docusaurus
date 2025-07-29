@@ -1,8 +1,6 @@
 ---
 title: 概要
-sidebar_position: 10
 ---
-
 # 分散マイクロサービス基盤 Chip-in
 
 Chip-in は、マイクロサービスをクラウド上に自由に分散して配置できる分散マイクロサービス(Distributed Micro Services)の基盤を提供します。小さなリソースを持ち寄って大規模なシステムを構築することをイメージして　Chip-in という名前をつけています。

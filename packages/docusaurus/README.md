@@ -172,6 +172,6 @@ jobs:
           curl -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.PAT_FOR_TRIGGER }}" \
-            https://api.github.com/repos/${{ github.repository_owner }}/docusaurus/dispatches \
+            https://api.github.com/repos/${{ github.repository_owner }}/${{ github.repository_owner }}/dispatches \
             -d '{"event_type": "docs-updated", "client_payload": {"repository": "${{ github.repository }}"}}'
 ```
