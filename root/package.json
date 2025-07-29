@@ -16,7 +16,7 @@
         "root"
     ],
     "dependencies": {
-        "@chip-in-v2/docusaurus": "^1.0.0",
+        "@chip-in-v2/docusaurus": "*",
         "@docusaurus/tsconfig": "^3.8.1"
     }
 }
