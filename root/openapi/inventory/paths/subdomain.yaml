@@ -1,0 +1,80 @@
+get:
+  tags:
+    - subdomain
+  summary: Find subdomain by name.
+  operationId: getSubdomainByName
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: Name of zone which subdomain belogs to
+      required: true
+      schema:
+        type: string
+    - name: subdomain
+      in: path
+      description: Name of subdomain to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Virtual Host not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+delete:
+  tags:
+    - subdomain
+  summary: Deletes a subdomain.
+  operationId: deleteSubdomain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: Name of zone which subdomain belogs to
+      required: true
+      schema:
+        type: string
+    - name: subdomain
+      in: path
+      description: Virtual Host URN to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the deleted contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    '400':
+      description: Invalid Name value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

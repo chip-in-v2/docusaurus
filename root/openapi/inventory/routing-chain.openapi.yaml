@@ -1,0 +1,13 @@
+openapi: 3.1.1
+tags:
+  - name: routing-chain
+    description: API Gateway でのルーティングチェーン。
+paths:
+  /realms/{realm}/routing-chains:
+    $ref: './paths/routing-chains.yaml'
+  /realms/{realm}/routing-chains/{routingChainName}:
+    $ref: './paths/routing-chain.yaml'
+components:
+  schemas:
+    RoutingChain:
+      $ref: './schemas/RoutingChain.yaml'

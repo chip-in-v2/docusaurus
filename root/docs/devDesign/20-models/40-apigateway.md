@@ -116,9 +116,46 @@ CHIPIN_SESSION Cookie が存在する場合は、JWTを検証し、 iss, exp の
 
 #### 認証済みセッション
 
-認証に成功すると、認証前セッションで発行されたセッションIDをキーにしてセッションオブジェクトをメモリ上に作成し、そこにユーザIDなど認証で得られたユーザの属性情報を保持します。
-認証済みセッションの管理は認証サービスにより行われます。認証サービスは前述のセッションIDをキーにしてデータベース上にセッション情報を保存します。セッション情報にはユーザIDや所属など RBAC, ABAC で利用するための属性情報が含まれます。
+API Gateway から OIDC の認証サービスを呼び出すことによって認証を行うことができます。
+以下に OIDC の認証サービスと連携する場合のシーケンスを示します。
 
+```plantuml Test
+!theme spacelab
+@startuml
+利用者 --> ブラウザ: $success("トップページを表示")
+ブラウザ --> "API Gateway": $success("GET")
+"API Gateway" --> ブラウザ: $success("認証委譲リダイレクト")
+ブラウザ --> "keycloak": $success("認証要求")
+"keycloak" --> ブラウザ: $success("ログインページ - set cookie")
+ブラウザ --> 利用者: $success("ログインページ表示")
+利用者 --> ブラウザ: $success("ID,パスワード,OTPを入力")
+ブラウザ --> "keycloak": $success("ID,パスワード,OTP")
+note over "keycloak"
+認証
+end note
+"keycloak" --> ブラウザ: $success("OIDC 認証コード付きリダイレクト")
+"ブラウザ" --> "API Gateway": $success("認証コード")
+"API Gateway" --> keycloak: $success("トークン取得")
+note over "keycloak"
+アクセストークン
+リフレッシュトークン
+発行
+end note
+"keycloak" --> "API Gateway": $success("レスポンス")
+note over "API Gateway"
+トークンをCookieで付与
+end note
+"API Gateway" --> ブラウザ: $success("トップページへリダイレクト")
+ブラウザ --> "API Gateway": $success("GET")
+"API Gateway"  --> "コンテンツサービス": $success("GET")
+"コンテンツサービス" --> ”API Gateway": $success("トップページ")
+"API Gateway" --> ブラウザ: $success("トップページ")
+ブラウザ --> 利用者: $success("トップページ表示")
+@enduml
+```
+
+上記の動作は API Gateway から呼び出された認証サービスによって行われます。認証に成功すると、認証前セッションで発行されたセッションIDをキーにしてセッションオブジェクトをメモリ上に作成し、そこにユーザIDなど認証で得られたユーザの属性情報を保持します。
+認証済みセッションの管理は認証サービスにより行われます。認証サービスは前述のセッションIDをキーにしてデータベース上にセッション情報を保存します。セッション情報にはユーザIDや所属など RBAC, ABAC で利用するための属性情報が含まれます。
 
 ## M2M通信
 

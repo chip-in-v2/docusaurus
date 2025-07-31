@@ -1,0 +1,13 @@
+openapi: 3.1.1
+tags:
+  - name: service
+    description: SPN経由で提供されるマイクロサービス
+paths:
+  /realms/{realm}/hubs/{hubName}/services:
+    $ref: './paths/services.yaml'
+  /realms/{realm}/hubs/{hubName}/services/{serviceName}:
+    $ref: './paths/service.yaml'
+components:
+  schemas:
+    Service:
+      $ref: './schemas/Service.yaml'

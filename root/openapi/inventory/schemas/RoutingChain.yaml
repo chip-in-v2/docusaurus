@@ -1,0 +1,240 @@
+type: object
+required:
+  - name
+  - title
+properties:
+  name:
+    type: string
+    description: |-
+      ルーティングチェーンの名前。URN の一部として使用される。
+      文字列は小文字英字、数字、ハイフン、アンダースコアのみを含むことができる。
+    example: cms-chain
+  realm:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      ルーティングチェインが属するレルムの名前。
+    example: urn:chip-in:realm:example-realm
+  urn:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      ルーティングチェーンのurn。
+    example: urn:chip-in:routing-chain:example-realm:cms-chain
+  title:
+    type: string
+    description: |-
+      ルーティングチェーンの日本語名称です。
+    example: CMSシステムルーティングチェーン
+  description:
+    type: string
+    description: |-
+      ルーティングチェーンの説明文です。
+      
+    example: CMSシステムのWebUI を提供するルーティングチェーンです。
+  rules:
+    type: array
+    description: |-
+      ルーティングチェーンのルールのリスト。各ルールは、リクエストを処理するための条件とアクションを定義する。
+      ルールは、リクエストのパスやヘッダなどを照合し、適切なアクションを実行するために使用される。
+    items:
+      type: object
+      required:
+        - match
+        - action
+      description: |-
+        ルーティングチェーンのルール。各ルールは、リクエストを処理するための条件とアクションを定義する。
+        ルールは、リクエストのパスやヘッダなどを照合し、
+        適切なアクションを実行するために使用される。
+      properties:
+        match:
+          type: string
+          description: |-
+            [RHAI](https://rhai.rs/book/about/features.html) の式で、リクエストのパスやヘッダなどを照合するための条件を記述する。
+            '{{' と '}}' で囲む必要はなく、全体が RHAI の式として評価される。
+          example: request.path.starts_with("/api") && request.headers["X-Auth-Token"]
+        action:
+          oneOf:
+            - type: object
+              title: Proxy
+              description: |-
+                リクエストをプロキシ先のサービスに転送するためのアクション。
+                前フェーズまでで作成されたレスポンスは破棄され、プロキシ先サービスから返却されたものが新しいレスポンスとなる。
+                このアクションは、リクエストを別のマイクロサービスに転送するために使用される。
+              required: 
+                - type
+                - target
+              properties:
+                type:
+                  type: string
+                  enum: [proxy]
+                target:
+                  type: string
+                  description: |-
+                    プロキシ先サービスのURN。
+                  example: '"urn:chip-in:service:example-realm:cms-service"'
+                noBody:
+                  type: boolean
+                  description: |-
+                    true の場合、リクエストボディは転送されない。
+                    デフォルトは false で、リクエストボディは転送される。
+                  example: false
+              additionalProperties: false
+            - type: object
+              title: Redirect
+              required: 
+                -  type
+              description: |-
+                リダイレクトを行うためのアクション。レスポンスの stauts は 302 に設定される。
+                リダイレクト先のURLは、レスポンスの Location ヘッダに設定される。
+                このアクションは、リクエストを別のURLに転送するために使用される。
+              properties:
+                type:
+                  type: string
+                  enum: [redirect]
+                target:
+                  type: string
+                  description: |-
+                    レスポンスの Location ヘッダに設定されるリダイレクト先のURL。
+                  example: https://idp.example.com/login
+              additionalProperties: false
+            - type: object
+              title: Jump
+              description: |-
+                別のルーティングチェーンにリクエストを転送するためのアクション。処理中のチェーンは終了し、転送先のチェーンが新たに開始される。
+              required: 
+                - type
+                - target
+              properties:
+                type:
+                  type: string
+                  enum: [jump]
+                target:
+                  type: string
+                  description: |-
+                    ルーティングチェーンのURN。
+                  example: urn:chip-in:routing-chain:example-realm:cms-chain
+              additionalProperties: false
+            - type: object
+              title: SetVariables
+              description: |-
+                RHAI の式を評価して、変数に値を設定するアクション。
+                このアクションは、リクエストやレスポンスの情報を参照して、変数に値を設定するために使用される。
+              required: 
+                - type
+                - variables
+              properties:
+                type:
+                  type: string
+                  enum: [setVariables]
+                variables:
+                  type: object
+                  description: |-
+                    設定する変数のキーと値のペア。
+                  example:
+                    savedCookie: "SESSION={{request.sessionID}}; Path=/; Secure; HttpOnly"
+                  additionalProperties:
+                    type: string
+                    description: |-
+                      プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は RHAI の式として評価される。
+                      RHAI の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+                      数値や booleanの場合はそのまま出力される。オブジェクトや配列の場合は、JSON文字列に変換されて出力される。
+                      プロパティの値が null の場合は、変数は設定されず、設定済みの変数は削除される。
+              additionalProperties: false
+            - type: object
+              title: SetHeaders
+              description: |-
+                HTTP ヘッダーの設定を行うためのアクション。
+                このアクションは、リクエストやレスポンスのヘッダを設定するために使用される。
+              required: 
+                - type
+                - target
+                - headers
+              properties:
+                type:
+                  type: string
+                  enum: [setHeaders]
+                target:
+                  type: string
+                  enum: [request, response]
+                  description: |-
+                    ヘッダの設定先。request の場合はリクエストヘッダ、response の場合はレスポンスヘッダ。
+                  example: response
+                headers:
+                  type: object
+                  description: |-
+                    設定するヘッダのキーと値のペア。
+                  example:
+                    content-type: "application/json"
+                    'X-Forwarded-For': "{{request.clientIp}}"
+                  additionalProperties:
+                    type: string
+                    description: |-
+                      プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は RHAI の式として評価される。
+                      RHAI の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+                      ただし、RHAI 式の評価結果が undefined や null の場合はヘッダは設定されず、設定済みのヘッダは削除される。
+                      数値や booleanの場合はそのまま出力される。オブジェクトや配列の場合は、JSON文字列に変換されて出力される。
+                      プロパティの値が null の場合は、ヘッダは設定されず、設定済みのヘッダは削除される。
+              additionalProperties: false
+            - type: object
+              title: SetSessionId
+              description: |-
+                このアクションは、CHIPIN_SESSION Cookie が存在しない場合、新しいセッションIDをを発行します。
+                セッションIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で 64文字の文字列にエンコードされます。
+
+                CHIPIN_SESSION Cookie が存在する場合は、JWTを検証し、 iss, exp の妥当性をチェックします。
+                sub の値をセッションIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_SESSION Cookie を再発行します。
+                exp 以外の値は引き継がれます。
+                セッションIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできません。セッションの有効期限が切れるまで有効です。
+
+                新しくセッションIDを生成した場合、および再発行した場合はレスポンスヘッダに Set-Cookie: CHIPIN_SESSION=<JWT>;HttpOnly;Secure;SameSite=Strict; を追加します。
+                サブドメインに shareCookie: true が設定されている場合は、CHIPIN_SESSION Cookie の Domain 属性にサブドメインの FQDN を設定します。
+                これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。
+              required: 
+                - type
+              properties:
+                type:
+                  type: string
+                  enum: [setSessionId]
+                reissueThreshold:
+                  type: integer
+                  default: 3600
+                  description: |-
+                    セッションIDの再発行閾値。単位は秒で、デフォルトは 3600 秒 (1時間)。
+                    この時間を過ぎると、CHIPIN_SESSION Cookie が再発行される。
+                  example: 3600
+                expiration:
+                  type: integer
+                  default: 15552000
+                  description: |-
+                    セッションIDの有効期限。単位は秒で、デフォルトは 15552000 秒 (180日)。
+                    この時間を過ぎると、セッションIDは無効となる。
+                  example: 15552000
+              additionalProperties: false
+            - type: object
+              title: AccessLog
+              description: |-
+                アクセスログを出力する。
+              required: 
+                - type
+                - target
+                - format
+              properties:
+                type:
+                  type: string
+                  enum: [accessLog]
+                target:
+                  type: string
+                  description: |-
+                    ログ出力サービスのURN。
+                  example: urn:chip-in:servies:example-realm:access-log-service
+                maxValueLength:
+                  type: integer
+                  default: 512
+                  description: |-
+                    ログの項目の値の最大長。デフォルトは 512 で、512文字を超える場合は切り捨てられる。
+                  example: 512
+              additionalProperties: false
+additionalProperties: false

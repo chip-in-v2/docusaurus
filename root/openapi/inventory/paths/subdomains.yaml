@@ -1,0 +1,131 @@
+put:
+  tags:
+    - subdomain
+  summary: Update an existing subdomain.
+  operationId: updateSubdomain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: Name of zone which subdomain belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Update an existent subdomain in the API gateway.
+    content:
+      application/json:
+        schema:
+          $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Virtual Host not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+post:
+  tags:
+    - subdomain
+  summary: Add a new subdomain to the zone.
+  operationId: addSubdomain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: Name of zone which subdomain belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Create a new subdomain in the zone
+    content:
+      application/json:
+        schema:
+          $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+get:
+  tags:
+    - subdomain
+  summary: Find Subdomains
+  operationId: listSubdomains
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: Name of zone which subdomain belogs to
+      required: true
+      schema:
+        type: string
+    - name: query
+      in: query
+      description: Query parameters for filtering subdomains
+      required: false
+      schema:
+        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of subdomains.
+        If no subdomains are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+    '400':
+      description: Invalid query parameters
+    '404':
+      description: realm or zone not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

@@ -1,0 +1,83 @@
+required:
+  - name
+  - urn
+  - title
+  - realm
+  - provider
+  - consumers
+type: object
+properties:
+  name:
+    type: string
+    description: |-
+      サービスの名前。URN の一部として使用される。
+      ただし、先頭がハイフンであってはならない。
+    example: authz-rbac
+  hub:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      サービスが接続される SPN Hub のURN。
+    example: urn:chip-in:network:example-realm:hub1
+  urn:
+    type: string
+    readOnly: true
+    description: |-
+      サービスのURN。URNは、サービスを一意に識別するための文字列で、以下の形式で構成される。<br/>
+      urn:chip-in:service:{realm}:{hubName}:{name}
+    example: urn:chip-in:service:example-realm:hub1:authz-rbac
+  title:
+    type: string
+    description: |-
+      サービスの日本語名称です。URN の一部として使用される。
+      文字列は日本語を含むことができる。
+    example: CMSシステム認可サービス
+  description:
+    type: string
+    description: |-
+      サービスの説明文です。URN の一部として使用される。
+      文字列は日本語を含むことができる。
+    example: CMSシステムの認可サービスです。
+  realm:
+    type: string
+    description: |-
+      サービスが属するレルムの名前。
+  availabilityManagement:
+    type: object
+    required:
+      - clusterManagerUrn
+      - serviceId
+    description: |-
+      コンテナクラスタ内でマイクロサービスのスケジュール起動、オンデマンド起動を行うためのパラメータ
+    properties:
+      clusterManagerUrn:
+        type: string
+        description: このサービスを起動できるコンテナクラスタのクラスタマネージャサービスの URN
+      serviceId:
+        type: string
+        description: クラスタ内でのマイクロサービスのID
+      startAt:
+        type: string
+        description: 定時起動する場合の起動スケジュールの CRON 式
+        example: 0 22 ? * SUN-THU *
+      stopAt:
+        type: string
+        description: 定時停止する場合の起動スケジュールの CRON 式
+        example: 0 9 ? * MON-FRI *
+      ondemandStart:
+        type: boolean
+        description: オンデマンド起動とするか否か。デフォルトは true
+      idleTimeout:
+        type: integer
+        description: 通信がない状態が一定時間続くとマイクロ。 ondemadStart が true の場合のみ有効
+    additionalProperties: false
+  singleton:
+    type: boolean
+    example: true
+  provider:
+    type: string
+    example: oidc-authz-provider
+  consumers:
+    type: array
+additionalProperties: false

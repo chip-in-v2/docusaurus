@@ -1,0 +1,54 @@
+get:
+  tags:
+    - realm
+  summary: Find realm by name.
+  operationId: getRealmByName
+  parameters:
+    - name: realm
+      in: path
+      description: Name of realm to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    '404':
+      description: Realm not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+delete:
+  tags:
+    - realm
+  summary: Deletes a realm.
+  operationId: deleteRealm
+  parameters:
+    - name: realm
+      in: path
+      description: Realm name to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Realm deleted. Returns the deleted contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    '404':
+      description: Realm not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

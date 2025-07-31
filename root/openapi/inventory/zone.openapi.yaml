@@ -1,0 +1,21 @@
+openapi: 3.1.1
+tags:
+  - name: zone
+    description: API Gateway で外部に露出するDNS上のゾーン
+  - name: subdomain
+    description: ゾーンに紐づくサブドメイン。
+paths:
+  /realms/{realm}/zones:
+    $ref: './paths/zones.yaml'
+  /realms/{realm}/zones/{zone}:
+    $ref: './paths/zone.yaml'
+  /realms/{realm}/zones/{zone}/subdomains:
+    $ref: './paths/subdomains.yaml'
+  /realms/{realm}/zones/{zone}/subdomains/{subdomain}:
+    $ref: './paths/subdomain.yaml'
+components:
+  schemas:
+    Zone:
+      $ref: './schemas/Zone.yaml'
+    Subdomain:
+      $ref: './schemas/Subdomain.yaml'

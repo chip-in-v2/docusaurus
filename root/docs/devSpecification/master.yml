@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../openapi/inventory/realm-definition.yaml
 realm:
   name: "master"
   title: "Master Realm"

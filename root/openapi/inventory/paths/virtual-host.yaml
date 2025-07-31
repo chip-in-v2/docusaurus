@@ -1,0 +1,69 @@
+get:
+  tags:
+    - virtual-host
+  summary: Find virtual host by name.
+  operationId: getVirtualHostByName
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: virtualHost
+      in: path
+      description: Name of virtual host to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Virtual Host not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+delete:
+  tags:
+    - virtual-host
+  summary: Deletes a virtual host.
+  description: Delete a virtual host.
+  operationId: deleteVirtualHost
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: virtualHost
+      in: path
+      description: Virtual Host URN to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the deleted contents.
+      content: 
+        application/json:
+          schema:
+            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+    '404':
+      description: Realm or Virtual Host not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

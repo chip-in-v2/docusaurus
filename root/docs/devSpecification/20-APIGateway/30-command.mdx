@@ -16,7 +16,7 @@ api-gateway コマンドは起動時とリロードシグナル受信時に構�
 全てのレルムを読み込みます。
 API Gateway はレルムごとに内部が分離されており、マルチテナントのシステムを容易に実装できます。
 
-<ApiSchema pointer="#/components/schemas/Realm" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Realm" />
 
 - disabled が True のものは無視します。
 - リロードにおいては、一覧の前後を比較し、追加削除を行います。
@@ -25,7 +25,7 @@ API Gateway はレルムごとに内部が分離されており、マルチテ�
 
 レルムごとにゾーンを読み込みます。ゾーンは DNS 権威サーバの管理単位です。
 
-<ApiSchema pointer="#/components/schemas/Zone" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Zone" />
 
 ### DNS 連携
 ゾーンに dnsProvider が設定されている場合、ゾーンに所属する仮想ホストに対してDNSレコードが自動的に作成さます。
@@ -36,7 +36,7 @@ API Gateway はレルムごとに内部が分離されており、マルチテ�
 ゾーンごとにサブドメインを読み込みます。
 サブドメインは、ゾーン内でドメインを作成するために使用されます。
 
-<ApiSchema pointer="#/components/schemas/Subdomain" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Subdomain" />
 
 disabled が True のものは無視されます。
 
@@ -45,7 +45,7 @@ disabled が True のものは無視されます。
 仮想ホストを読み込みます。
 仮想ホストは、サブドメインの下にFQDNを持ち、特定のサービスやアプリケーションを識別するために使用されます。
 
-<ApiSchema pointer="#/components/schemas/VirtualHost" />
+<ApiSchema id="inventory" pointer="#/components/schemas/VirtualHost" />
 
 disabled が True のものは無視されます。
 
@@ -54,4 +54,4 @@ disabled が True のものは無視されます。
 レルムごとにルーティングチェーンを読み込みます。
 ルーティングチェーンは、API Gateway 内で HTTP リクエストの処理を行うためのルールの集合であり、リクエストを適切なマイクロサービスに転送するためのロジックを定義できます。
 
-<ApiSchema pointer="#/components/schemas/RoutingChain" />
+<ApiSchema id="inventory" pointer="#/components/schemas/RoutingChain" />

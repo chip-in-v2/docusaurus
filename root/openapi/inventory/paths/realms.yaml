@@ -1,0 +1,90 @@
+get:
+  tags:
+    - realm
+  summary: List realms.
+  operationId: listRealms
+  parameters: 
+    - name: "-"
+      in: query
+      required: false
+      schema:
+        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of realms.
+        If no realms are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    '400':
+      description: Bad request, invalid query parameters.
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+put:
+  tags:
+    - realm
+  summary: Update an existing realm.
+  operationId: updateRealm
+  requestBody:
+    description: Update an existent realm in the SPN
+    content:
+      application/json:
+        schema:
+          $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    '400':
+      description: Invalid realm name supplied
+    '404':
+      description: Realm not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+post:
+  tags:
+    - realm
+  summary: Add a new realm.
+  operationId: addRealm
+  requestBody:
+    description: Create a new realm
+    content:
+      application/json:
+        schema:
+          $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+    '400':
+      description: Invalid realm name supplied or the realm already exists
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

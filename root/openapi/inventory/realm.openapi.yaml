@@ -1,0 +1,13 @@
+openapi: 3.1.1
+tags:
+  - name: realm
+    description: マイクロサービスをグループ化するための論理的な区分。'/' などパスとして使用できない文字を含むことはできない。
+paths:
+  /realms:
+    $ref: './paths/realms.yaml'
+  /realms/{realm}:
+    $ref: './paths/realm.yaml'
+components:
+  schemas:
+    Realm:
+      $ref: './schemas/Realm.yaml'

@@ -1,0 +1,68 @@
+get:
+  tags:
+    - routing-chain
+  summary: Find routing chain by name.
+  operationId: getRoutingChainByName
+  parameters:
+    - name: realm
+      in: path
+      description: relam which routing chain belogs to
+      required: true
+      schema:
+        type: string
+    - name: routingChainName
+      in: path
+      description: Name of routing chain to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Realm or Routing Chain not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"
+delete:
+  tags:
+    - routing-chain
+  summary: Deletes a routing chain.
+  operationId: deleteRoutingChain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which routing chain belogs to
+      required: true
+      schema:
+        type: string
+    - name: routingChainName
+      in: path
+      description: Routing Chain URN to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the deleted contents.
+      content: 
+        application/json:
+          schema:
+            $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+    '400':
+      description: Invalid Name value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../components.openapi.yaml#/components/schemas/Error"

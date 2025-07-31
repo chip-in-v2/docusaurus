@@ -1,0 +1,13 @@
+openapi: 3.1.1
+tags:
+  - name: hub
+    description: SPNのハブ。
+paths:
+  /realms/{realm}/hubs:
+    $ref: './paths/hubs.yaml'
+  /realms/{realm}/hubs/{hubName}:
+    $ref: './paths/hub.yaml'
+components:
+  schemas:
+    Hub:
+      $ref: './schemas/Hub.yaml'

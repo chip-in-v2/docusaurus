@@ -1,0 +1,13 @@
+openapi: 3.1.1
+tags:
+  - name: virtual-host
+    description: ゾーンに紐づく仮想ホスト。
+paths:
+  /realms/{realm}/virtual-hosts:
+    $ref: './paths/virtual-hosts.yaml'
+  /realms/{realm}/virtual-hosts/{virtualHost}:
+    $ref: './paths/virtual-host.yaml'
+components:
+  schemas:
+    VirtualHost:
+      $ref: './schemas/VirtualHost.yaml'

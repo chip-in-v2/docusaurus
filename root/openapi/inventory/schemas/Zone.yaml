@@ -1,0 +1,49 @@
+type: object
+description: |-
+  ゾーンは、API Gateway 内のDNSレコードを管理するための論理的なグループであり、仮想ホストのFQDNを収容できる。また、サブドメインを作成し、ゾーン内のFQDNをグループ化することができる。
+  特に master レルムのゾーンは、他のレルムにサブドメインを貸し出すことができる。
+  各ゾーンは、特定のレルムに属し、そのレルム内で一意の名前を持つ。
+  ゾーンは、DNSプロバイダやACME証明書プロバイダと連携して、DNSレコードやSSL/TLS証明書の管理を行う。
+required:
+  - zone
+  - title
+properties:
+  zone:
+    type: string
+    format: hostname
+    description: |-
+      ゾーンの名前。FQDN のサフィックスとして使用される。
+      文字列は小文字英字、数字、ハイフン、ピリオドのみを含むことができる。
+    example: example.com
+  title:
+    type: string
+    description: ゾーンの日本語名称です。
+    example: CMSシステム検証環境ゾーン
+  description:
+    type: string
+    description: ゾーンの説明文ですです。
+    example: CMSシステムの検証環境用のゾーンです。
+  realm:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      ゾーンが属するレルムの名前。
+  urn:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      ゾーンのURN。形式は `urn:chip-in:zone:{realm-name}:{zone-name}` である。
+    example: urn:chip-in:zone:example-realm:example.com
+  dnsProvider:
+    type: string
+    description: |-
+      ゾーンのDNSレコードを管理するためのDNSプロバイダのURN。
+    example: urn:chip-in:service:example-realm:example-zone-route53
+  acmeCertificateProvider:
+    type: string
+    description: |-
+      ゾーンのSSL/TLS証明書を自動的に取得するためのACME証明書プロバイダのURL
+    example: https://acme-v02.api.letsencrypt.org/directory
+additionalProperties: false
