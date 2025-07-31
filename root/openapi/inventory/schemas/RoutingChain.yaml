@@ -220,7 +220,6 @@ properties:
               required: 
                 - type
                 - target
-                - format
               properties:
                 type:
                   type: string

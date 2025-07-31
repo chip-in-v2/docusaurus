@@ -1,6 +1,6 @@
 openapi: 3.1.1
 info:
-  title: Chip-in inventory API
+  title: Chip-in Inventory API
   description: |-
     これはChip-in のインベントリにアクセスするためのAPIである。
     アクセス制御は別途OPAで実装される。その仕様は inventory.rego で記述されている。

@@ -1,4 +1,6 @@
 openapi: 3.1.1
+info:
+  title: Components for Inventory API
 components:
   schemas:
     Error:

@@ -1,6 +1,0 @@
-type: object
-properties:
-  realm:
-    type: string
-    description: |-
-      レルムの定義。レルムは、SPNの基本的な単位であり、DNSゾーン、仮想ホスト、ルーティングチェーン、SPN Hub、サービスなどを含む。

@@ -1,4 +1,14 @@
 openapi: 3.1.1
+info:
+  title: Routing Chain Part of Chip-in Inventory API
+  version: 1.0.0
+  license: 
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://127.0.0.1:8080
+security: 
+  -  bearerAuth: []
 tags:
   - name: routing-chain
     description: API Gateway でのルーティングチェーン。
@@ -11,3 +21,5 @@ components:
   schemas:
     RoutingChain:
       $ref: './schemas/RoutingChain.yaml'
+  securitySchemes:
+    $ref: './components.openapi.yaml#/components/securitySchemes'

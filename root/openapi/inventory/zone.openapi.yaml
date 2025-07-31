@@ -1,4 +1,14 @@
 openapi: 3.1.1
+info:
+  title: Zone Part of Chip-in Inventory API
+  version: 1.0.0
+  license: 
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://127.0.0.1:8080
+security: 
+  -  bearerAuth: []
 tags:
   - name: zone
     description: API Gateway で外部に露出するDNS上のゾーン
@@ -19,3 +29,5 @@ components:
       $ref: './schemas/Zone.yaml'
     Subdomain:
       $ref: './schemas/Subdomain.yaml'
+  securitySchemes:
+    $ref: './components.openapi.yaml#/components/securitySchemes'
