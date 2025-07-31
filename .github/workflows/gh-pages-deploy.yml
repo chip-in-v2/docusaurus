@@ -70,7 +70,6 @@ jobs:
           echo "All repositories processed, then building the website..."
           export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           echo "Build date: $BUILD_DATE"
-          npm run build-pdf
           npm run build-doc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
