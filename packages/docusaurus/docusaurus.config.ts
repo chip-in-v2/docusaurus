@@ -88,7 +88,10 @@ const config: Config = {
     customFields: {
         buildDate: process.env.BUILD_DATE || new Date().toISOString(),
     },
-
+    markdown: {
+        mermaid: true,
+    },
+    themes: ["@docusaurus/theme-mermaid"],
     presets: [
         [
             "@docusaurus/preset-classic",
