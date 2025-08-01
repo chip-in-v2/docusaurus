@@ -1,6 +1,6 @@
 {
     "name": "lambda-deployer",
-    "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node",
+    "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:22-bullseye",
     "features": {
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
@@ -8,12 +8,12 @@
         "vscode": {
             "settings": {
                 "terminal.integrated.shell.linux": "/bin/bash",
-                "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+                "editor.defaultFormatter": "vscode.markdown-language-features",
                 "editor.formatOnType": false,
                 "editor.formatOnPaste": true,
                 "yaml.schemas": {
                     "https://json.schemastore.org/github-workflow.json": [
-                        "/.github/workflows/deploy.yml",
+                        "/.github/workflows/deploy.yml"
                     ],
                     "file:///workspaces/docusaurus/root/openapi/inventory/realm-definition.yaml": [
                         "/docs/devSpecification/master.yml"
@@ -23,7 +23,7 @@
             },
             "extensions": [
                 "esbenp.prettier-vscode",
-                "rvest.vs-code-prettier-eslint",
+                "vscode.markdown-language-features",
                 "hediet.vscode-drawio",
                 "redocly.openapi-vs-code",
                 "redhat.vscode-yaml"
