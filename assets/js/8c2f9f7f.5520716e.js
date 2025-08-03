@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[1482],{3442:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-redoc","id":"inventoryrouting-chain"}')}}]);
