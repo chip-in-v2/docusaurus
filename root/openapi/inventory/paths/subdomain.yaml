@@ -28,7 +28,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+            $ref: '../schemas/Subdomain.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -38,7 +38,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 delete:
   tags:
     - subdomain
@@ -69,7 +69,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+            $ref: '../schemas/Subdomain.yaml'
     '400':
       description: Invalid Name value
     default:
@@ -77,4 +77,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

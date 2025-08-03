@@ -15,7 +15,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+          $ref: '../schemas/VirtualHost.yaml'
     required: true
   responses:
     '200':
@@ -23,7 +23,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+            $ref: '../schemas/VirtualHost.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -35,7 +35,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 post:
   tags:
     - virtual-host
@@ -53,7 +53,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+          $ref: '../schemas/VirtualHost.yaml'
     required: true
   responses:
     '200':
@@ -61,7 +61,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+            $ref: '../schemas/VirtualHost.yaml'
     '400':
       description: Invalid input
     '422':
@@ -71,7 +71,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 get:
   tags:
     - virtual-host
@@ -89,7 +89,7 @@ get:
       description: Query parameters for filtering virtual hosts
       required: false
       schema:
-        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+        $ref: '../schemas/QueryParameter.yaml'
   responses:
     '200':
       description: |-
@@ -100,7 +100,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+              $ref: '../schemas/VirtualHost.yaml'
     '400':
       description: Invalid query parameters
     '404':
@@ -110,4 +110,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

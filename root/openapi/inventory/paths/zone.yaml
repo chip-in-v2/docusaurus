@@ -23,7 +23,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Zone'
+            $ref: '../schemas/Zone.yaml'
     '400':
       description: Invalid zone supplied
     '404':
@@ -33,7 +33,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 delete:
   tags:
     - zone
@@ -58,7 +58,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Zone'
+            $ref: '../schemas/Zone.yaml'
     '400':
       description: Invalid zone value
     default:
@@ -66,4 +66,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

@@ -3,7 +3,7 @@ properties:
   realm:
     $ref: './schemas/Realm.yaml'
     description: |-
-      レルムの定義。レルムは、SPNの基本的な単位であり、DNSゾーン、仮想ホスト、ルーティングチェーン、SPN Hub、サービスなどを含む。
+      レルムの定義。レルムは、Chip-in のマルチテナントにおいてテナントごとに割り当てられ、DNSゾーン、仮想ホスト、ルーティングチェーン、SPN Hub、サービスなどを含む。
   zones:
     type: array
     items:

@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+            $ref: '../schemas/Realm.yaml'
     '404':
       description: Realm not found
     default:
@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 delete:
   tags:
     - realm
@@ -43,7 +43,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../realm.openapi.yaml#/components/schemas/Realm'
+            $ref: '../schemas/Realm.yaml'
     '404':
       description: Realm not found
     default:
@@ -51,4 +51,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

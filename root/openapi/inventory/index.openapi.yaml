@@ -15,41 +15,50 @@ servers:
 security: 
   -  bearerAuth: []
 tags:
-  - $ref: './realm.openapi.yaml#/tags/0'
-  - $ref: './zone.openapi.yaml#/tags/0'
-  - $ref: './zone.openapi.yaml#/tags/1'
-  - $ref: './virtual-host.openapi.yaml#/tags/0'
-  - $ref: './routing-chain.openapi.yaml#/tags/0'
-  - $ref: './hub.openapi.yaml#/tags/0'
-  - $ref: './service.openapi.yaml#/tags/0'
+  - name: realm
+    description: マイクロサービスをグループ化するための論理的な区分。'/' などパスとして使用できない文字を含むことはできない。
+  - name: zone
+    description: API Gateway で外部に露出するDNS上のゾーン
+  - name: virtual-host
+    description: ゾーンに紐づく仮想ホスト。
+  - name: routing-chain
+    description: API Gateway でのルーティングチェーン。
+  - name: hub
+    description: SPNのハブ。
+  - name: service
+    description: SPN経由で提供されるマイクロサービス
 paths:
   /realms:
-    $ref: './realm.openapi.yaml#/paths/~1realms'
+    $ref: './paths/realms.yaml'
   /realms/{realm}:
-    $ref: './realm.openapi.yaml#/paths/~1realms~1{realm}'
+    $ref: './paths/realm.yaml'
   /realms/{realm}/zones:
-    $ref: './zone.openapi.yaml#/paths/~1realms~1{realm}~1zones'
+    $ref: './paths/zones.yaml'
   /realms/{realm}/zones/{zone}:
-    $ref: './zone.openapi.yaml#/paths/~1realms~1{realm}~1zones~1{zone}'
+    $ref: './paths/zone.yaml'
   /realms/{realm}/zones/{zone}/subdomains:
-    $ref: './zone.openapi.yaml#/paths/~1realms~1{realm}~1zones~1{zone}~1subdomains'
+    $ref: './paths/subdomains.yaml'
   /realms/{realm}/zones/{zone}/subdomains/{subdomain}:
-    $ref: './zone.openapi.yaml#/paths/~1realms~1{realm}~1zones~1{zone}~1subdomains~1{subdomain}'
+    $ref: './paths/subdomain.yaml'
   /realms/{realm}/virtual-hosts:
-    $ref: './virtual-host.openapi.yaml#/paths/~1realms~1{realm}~1virtual-hosts'
+    $ref: './paths/virtual-hosts.yaml'
   /realms/{realm}/virtual-hosts/{virtualHost}:
-    $ref: './virtual-host.openapi.yaml#/paths/~1realms~1{realm}~1virtual-hosts~1{virtualHost}'
+    $ref: './paths/virtual-host.yaml'
   /realms/{realm}/routing-chains:
-    $ref: './routing-chain.openapi.yaml#/paths/~1realms~1{realm}~1routing-chains'
+    $ref: './paths/routing-chains.yaml'
   /realms/{realm}/routing-chains/{routingChainName}:
-    $ref: './routing-chain.openapi.yaml#/paths/~1realms~1{realm}~1routing-chains~1{routingChainName}'
+    $ref: './paths/routing-chain.yaml'
   /realms/{realm}/hubs:
-    $ref: './hub.openapi.yaml#/paths/~1realms~1{realm}~1hubs'
+    $ref: './paths/hubs.yaml'
   /realms/{realm}/hubs/{hubName}:
-    $ref: './hub.openapi.yaml#/paths/~1realms~1{realm}~1hubs~1{hubName}'
+    $ref: './paths/hub.yaml'
   /realms/{realm}/hubs/{hubName}/services:
-    $ref: './service.openapi.yaml#/paths/~1realms~1{realm}~1hubs~1{hubName}~1services'
+    $ref: './paths/services.yaml'
   /realms/{realm}/hubs/{hubName}/services/{serviceName}:
-    $ref: './service.openapi.yaml#/paths/~1realms~1{realm}~1hubs~1{hubName}~1services~1{serviceName}'
+    $ref: './paths/service.yaml'
 components:
-  $ref: './components.openapi.yaml#/components'
+  securitySchemes:
+    bearerAuth: # セキュリティスキームの定義
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

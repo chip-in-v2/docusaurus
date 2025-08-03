@@ -21,7 +21,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+          $ref: '../schemas/Subdomain.yaml'
     required: true
   responses:
     '200':
@@ -29,7 +29,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+            $ref: '../schemas/Subdomain.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -41,7 +41,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 post:
   tags:
     - subdomain
@@ -65,7 +65,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+          $ref: '../schemas/Subdomain.yaml'
     required: true
   responses:
     '200':
@@ -73,7 +73,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+            $ref: '../schemas/Subdomain.yaml'
     '400':
       description: Invalid input
     '422':
@@ -83,7 +83,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 get:
   tags:
     - subdomain
@@ -107,7 +107,7 @@ get:
       description: Query parameters for filtering subdomains
       required: false
       schema:
-        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+        $ref: '../schemas/QueryParameter.yaml'
   responses:
     '200':
       description: |-
@@ -118,7 +118,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../zone.openapi.yaml#/components/schemas/Subdomain'
+              $ref: '../schemas/Subdomain.yaml'
     '400':
       description: Invalid query parameters
     '404':
@@ -128,4 +128,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

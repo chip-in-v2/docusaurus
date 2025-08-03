@@ -21,7 +21,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../service.openapi.yaml#/components/schemas/Service'
+          $ref: '../schemas/Service.yaml'
     required: true
   responses:
     '200':
@@ -29,7 +29,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../service.openapi.yaml#/components/schemas/Service'
+            $ref: '../schemas/Service.yaml'
     '400':
       description: Invalid contents is supplied
     '404':
@@ -41,7 +41,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 post:
   tags:
     - service
@@ -65,7 +65,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../service.openapi.yaml#/components/schemas/Service'
+          $ref: '../schemas/Service.yaml'
     required: true
   responses:
     '200':
@@ -73,7 +73,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../service.openapi.yaml#/components/schemas/Service'
+            $ref: '../schemas/Service.yaml'
     '400':
       description: Invalid contents is supplied
     '404':
@@ -85,7 +85,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 get:
   tags:
     - service
@@ -109,7 +109,7 @@ get:
       description: Query parameters for filtering services
       required: false
       schema:
-        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+        $ref: '../schemas/QueryParameter.yaml'
   responses:
     '200':
       description: |-
@@ -120,7 +120,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../service.openapi.yaml#/components/schemas/Service'
+              $ref: '../schemas/Service.yaml'
     '400':
       description: Invalid status value
     default:
@@ -128,4 +128,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

@@ -28,7 +28,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../service.openapi.yaml#/components/schemas/Service'
+            $ref: '../schemas/Service.yaml'
     '400':
       description: Invalid URN supplied
     '404':
@@ -38,7 +38,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 delete:
   tags:
     - service
@@ -69,7 +69,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../service.openapi.yaml#/components/schemas/Service'
+            $ref: '../schemas/Service.yaml'
     '400':
       description: Invalid URN value
     default:
@@ -77,4 +77,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

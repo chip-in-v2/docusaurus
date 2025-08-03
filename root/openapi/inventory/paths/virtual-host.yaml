@@ -22,7 +22,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+            $ref: '../schemas/VirtualHost.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -32,7 +32,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 delete:
   tags:
     - virtual-host
@@ -58,7 +58,7 @@ delete:
       content: 
         application/json:
           schema:
-            $ref: '../virtual-host.openapi.yaml#/components/schemas/VirtualHost'
+            $ref: '../schemas/VirtualHost.yaml'
     '404':
       description: Realm or Virtual Host not found
     default:
@@ -66,4 +66,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

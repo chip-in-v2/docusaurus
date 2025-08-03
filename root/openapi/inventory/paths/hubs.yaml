@@ -15,7 +15,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../hub.openapi.yaml#/components/schemas/Hub'
+          $ref: '../schemas/Hub.yaml'
     required: true
   responses:
     '200':
@@ -23,7 +23,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../hub.openapi.yaml#/components/schemas/Hub'
+            $ref: '../schemas/Hub.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -35,7 +35,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 post:
   tags:
     - hub
@@ -53,7 +53,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../hub.openapi.yaml#/components/schemas/Hub'
+          $ref: '../schemas/Hub.yaml'
     required: true
   responses:
     '200':
@@ -61,7 +61,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../hub.openapi.yaml#/components/schemas/Hub'
+            $ref: '../schemas/Hub.yaml'
     '400':
       description: Invalid input
     '422':
@@ -71,7 +71,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 get:
   tags:
     - hub
@@ -89,7 +89,7 @@ get:
       description: Query parameters for filtering hubs
       required: false
       schema:
-        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+        $ref: '../schemas/QueryParameter.yaml'
   responses:
     '200':
       description: |-
@@ -100,7 +100,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../hub.openapi.yaml#/components/schemas/Hub'
+              $ref: '../schemas/Hub.yaml'
     '400':
       description: Invalid status value
     default:
@@ -108,4 +108,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

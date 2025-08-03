@@ -15,7 +15,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+          $ref: '../schemas/RoutingChain.yaml'
     required: true
   responses:
     '200':
@@ -23,7 +23,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+            $ref: '../schemas/RoutingChain.yaml'
     '400':
       description: Invalid Name supplied
     '404':
@@ -35,7 +35,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 post:
   tags:
     - routing-chain
@@ -53,7 +53,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+          $ref: '../schemas/RoutingChain.yaml'
     required: true
   responses:
     '200':
@@ -61,7 +61,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+            $ref: '../schemas/RoutingChain.yaml'
     '400':
       description: Invalid input
     '422':
@@ -71,7 +71,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"
 get:
   tags:
     - routing-chain
@@ -89,7 +89,7 @@ get:
       description: Query parameters for filtering routing chains
       required: false
       schema:
-        $ref: '../components.openapi.yaml#/components/schemas/QueryParameter'
+        $ref: '../schemas/QueryParameter.yaml'
   responses:
     '200':
       description: |-
@@ -100,7 +100,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../routing-chain.openapi.yaml#/components/schemas/RoutingChain'
+              $ref: '../schemas/RoutingChain.yaml'
     '400':
       description: Invalid query parameters
     '404':
@@ -110,4 +110,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../components.openapi.yaml#/components/schemas/Error"
+            $ref: "../schemas/Error.yaml"

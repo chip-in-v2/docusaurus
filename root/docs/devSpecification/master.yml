@@ -37,6 +37,16 @@ routingChains:
     rules:
       - match: "true"
         action:
+          type: checkoutServices
+          services:
+            - urn:chip-in:service:master:www-contents
+            - urn:chip-in:service:master:idp
+            - urn:chip-in:service:master:db
+      - match: "true"
+        action:
+          type: setSessionId
+      - match: "true"
+        action:
           type: "proxy"
           target: "urn:chip-in:service:master:www-contents"
 hubs:
