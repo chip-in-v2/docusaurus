@@ -242,7 +242,7 @@ spnhubコマンドは起動時とリロードシグナル受信時に構成情�
 全てのレルムを読み込みます。
 SPN Hub はレルムごとに内部が分離されており、マルチテナントのシステムを容易に実装できます。
 
-<ApiSchema id="inventory" pointer="#/components/schemas/Realm" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Realm" showExample="true" />
 
 - disabled が True のものは無視します。
 - リロードにおいては、一覧の前後を比較し、追加削除を行います。
@@ -251,14 +251,14 @@ SPN Hub はレルムごとに内部が分離されており、マルチテナン
 
 レルムごとに SPN Hub を構築します。
 
-<ApiSchema id="inventory" pointer="#/components/schemas/Hub" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Hub" showExample="true" />
 
 
 ### 3. サービスの構築
 
 SPN Hub ごとにサービスの定義を読み込みます。
 
-<ApiSchema id="inventory" pointer="#/components/schemas/Service" />
+<ApiSchema id="inventory" pointer="#/components/schemas/Service" showExample="true" />
 
 availabilityManagement が指定されていて、かつ ondemandStart が false のサービスについてはクラスタマネージャを呼び出してサービスを起動する。
 サービス定義の読み込みが終わった時点で、SPN Hub での QUIC パケットの受信を開始します。
