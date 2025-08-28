@@ -1,0 +1,71 @@
+type: object
+description: |-
+  サブドメインは、ゾーン内で定義され、そのFQDNをサフィックスとする仮想ホストをグループ化して収容することができる。
+  各サブドメインは、特定のゾーンに属し、そのゾーン内で一意の名前を持つ。
+  master レルムのサブドメインは、他のレルムにサブドメインを貸し出すことができる。
+  サブドメイン名"@"はゾーンのFQDNを表し、ゾーン直下の仮想ホストを収容する。
+required:
+  - name
+  - title
+properties:
+  name:
+    type: string
+    pattern: '^([a-z0-9][a-z0-9-]*|@)$'
+    description: |-
+      サブドメインの名前。ゾーン名と結合して FQDN を得ることができる。
+      文字列は小文字英字、数字、ハイフンのみを含むことができる。
+      ただし、先頭がハイフンであってはならない。
+      たとえば、 stg というサブドメイン名でゾーンの名前が example.com の場合、
+      stg.example.com というサブドメインを構成し、www.stg.example.com, login.stg.example.com  というような
+      FQDN の仮想ホストを収容することができる。
+      特別なサブドメイン名 "@" は、ゾーンのFQDNそのものを表し、ゾーン直下の仮想ホストを収容する。
+    example: stg
+  fqdn:
+    type: string
+    readOnly: true
+    format: hostname
+    description: |-
+      サブドメインの完全修飾ドメイン名(FQDN)。
+      たとえば、 stg.example.com のように、ゾーン名と結合して得られる。
+      このFQDNは、サブドメイン内の仮想ホストのFQDNのベースとなる。
+    example: stg.example.com
+  zone:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      このサブドメインが属するゾーンのURN。
+      ゾーンは、サブドメインのFQDNのサフィックスとして使用される。
+      たとえば、 stg.example.com の場合、ゾーンは example.com となる。
+    example: urn:chip-in:zone:example-realm:example.com
+  urn:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      サブドメインのURN。形式は `urn:chip-in:subdomain:{realm-name}:{zone-name}:{subdomain-name}` である。
+    example: urn:chip-in:subdomain:example-realm:example.com:stg
+  title:
+    type: string
+    description: サブドメインの名称です。
+    example: CMSシステム
+  description:
+    type: string
+    description: サブドメインの説明文です。
+    example: CMSシステムのWebUI を提供するサブドメインです。
+  destinationRealm:
+    type: string
+    description: |-
+      このサブドメインの貸出先レルムののURN。
+    example: urn:chip-in:realm:example-realm
+  shareCookie:
+    type: boolean
+    default: false
+    description: |-
+      このフラグが指定されると、配下の仮想ホストの間でセッション Cookie が共有される。
+      すなわち、仮想ホストから発行せれるセッション Cookie の domain 属性にはサブドメインのFQDNが指定される。
+      デフォルトでは Cookie に Domain 属性は設定されない。
+      サブドメイン配下の仮想ホストのアクセスログ間でセッションによる串刺しが可能になり、シングルサインオンも実装される。
+      OIDCやSAMLによるシングルサインオンとは異なり、認証サーバへのリダイレクトは不要となる。
+    example: true
+additionalProperties: false

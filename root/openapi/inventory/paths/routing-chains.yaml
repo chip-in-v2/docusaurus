@@ -1,0 +1,113 @@
+put:
+  tags:
+    - routing-chain
+  summary: Update an existing routing chain.
+  operationId: updateRoutingChain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which routing chain belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Update an existent routing chain in the Realm.
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/RoutingChain.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/RoutingChain.yaml'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Realm not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+post:
+  tags:
+    - routing-chain
+  summary: Add a new routing chain to the Realm.
+  operationId: addRoutingChain
+  parameters:
+    - name: realm
+      in: path
+      description: relam which routing chain belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Create a new routing chain in the realm.
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/RoutingChain.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/RoutingChain.yaml'
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+get:
+  tags:
+    - routing-chain
+  summary: Finds Routing Chains
+  operationId: listRoutingChains
+  parameters:
+    - name: realm
+      in: path
+      description: relam which routing chain belogs to
+      required: true
+      schema:
+        type: string
+    - name: query
+      in: query
+      description: Query parameters for filtering routing chains
+      required: false
+      schema:
+        $ref: '../schemas/QueryParameter.yaml'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of routing chains.
+        If no routing chains are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/RoutingChain.yaml'
+    '400':
+      description: Invalid query parameters
+    '404':
+      description: realm not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

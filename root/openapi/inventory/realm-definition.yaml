@@ -1,0 +1,44 @@
+type: object
+properties:
+  realm:
+    $ref: './schemas/Realm.yaml'
+    description: |-
+      レルムの定義。レルムは、Chip-in のマルチテナントにおいてテナントごとに割り当てられ、DNSゾーン、仮想ホスト、ルーティングチェーン、SPN Hub、サービスなどを含む。
+  zones:
+    type: array
+    items:
+      $ref: './schemas/Zone.yaml'
+    description: |-
+      レルムに属するゾーンのリスト。各ゾーンは、DNSレコードを管理するための情報を含む。
+  subdomains:
+    type: array
+    items:
+      $ref: './schemas/Subdomain.yaml'
+    description: |-
+      レルムに属するサブドメインのリスト。
+  virtualHosts:
+    type: array
+    items:
+      $ref: './schemas/VirtualHost.yaml'
+    description: |-
+      レルムに属する仮想ホストのリスト。各仮想ホストは、FQDN、ルーティングチェーン、SSL/TLS証明書などの情報を含む。
+  routingChains:
+    type: array
+    items:
+      $ref: './schemas/RoutingChain.yaml'
+    description: |-
+      レルムに属するルーティングチェーンのリスト。各ルーティングチェーンは、リクエストの処理を行うためのルールの集合を含む。
+  hubs:
+    type: array
+    items:
+      $ref: './schemas/Hub.yaml'
+    description: |-
+      レルムに属する SPN Hub のリスト。各 SPN Hub は、SPN Hub の名前、FQDN、サーバ証明書、サーバ証明書の秘密鍵などの情報を含む。
+  services:
+    type: array
+    items:
+      $ref: './schemas/Service.yaml'
+    description: |-
+      レルムに属するサービスのリスト。各サービスは、サービスの名前、URN、タイトル、説明、提供者、利用者などの情報を含む。
+additionalProperties: false
+

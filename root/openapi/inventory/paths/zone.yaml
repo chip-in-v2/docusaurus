@@ -1,0 +1,69 @@
+get:
+  tags:
+    - zone
+  summary: Find zone.
+  description: Returns a single zone.
+  operationId: getZone
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: zone to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Zone.yaml'
+    '400':
+      description: Invalid zone supplied
+    '404':
+      description: Zone not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+delete:
+  tags:
+    - zone
+  summary: Deletes a zone.
+  operationId: deleteZone
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: zone
+      in: path
+      description: zone to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Zone deleted. Returns the deleted contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Zone.yaml'
+    '400':
+      description: Invalid zone value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

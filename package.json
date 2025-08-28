@@ -1,0 +1,13 @@
+{
+    "name": "@chip-in-v2/docusaurus-workspaces",
+    "version": "1.0.0",
+    "description": "Docusaurus for Chip-in",
+    "repository": "https://github.com/chip-in-v2/chip-in-v2",
+    "author": "Mitsuru Nakakawaji <mitsuru@procube.jp>",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*",
+        "root"
+    ]
+}

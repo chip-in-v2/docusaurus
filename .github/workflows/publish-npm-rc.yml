@@ -1,0 +1,40 @@
+name: Publish RC for Pull Request
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'packages/docusaurus/package.json'
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          # This sets the scope for your organization's packages
+          scope: '@${{ github.repository_owner }}'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: GitHub Packages にパッケージを公開
+        run: npm publish --tag rc --workspace=packages/docusaurus
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

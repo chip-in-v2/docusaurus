@@ -1,0 +1,81 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/docusaurus/**'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          # This sets the scope for your organization's packages
+          scope: '@${{ github.repository_owner }}'
+
+      - name: Get version to be released
+        id: get-version
+        run: |
+          # コミットに備えて設定
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          # パッケージのバージョンを取得
+          cd packages/docusaurus
+          PACKAGE_VERSION=$(node -e "console.log(require('./package.json').version)")
+          echo "Current version: ${PACKAGE_VERSION}"
+          CHANGED=false
+          
+          if [[ "${PACKAGE_VERSION}" == *"-rc"* ]]; then
+            echo "RC version detected. Bumping to patch version..."
+            npm version patch
+            PACKAGE_VERSION=$(node -e "console.log(require('./package.json').version)")
+            echo "New version: ${PACKAGE_VERSION}"
+            
+            # 変更をコミット（npm versionがコミットしなかった場合）
+            if [[ -n "$(git status --porcelain)" ]]; then
+              echo "Changes detected, committing version bump..."
+              git add ../../package-lock.json package.json
+              git commit -m "v${PACKAGE_VERSION}"
+              echo "Committed version bump"
+            else
+              echo "No changes to commit"
+            fi
+            
+            CHANGED=true
+          fi
+          
+          echo "version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "changed=${CHANGED}" >> "$GITHUB_OUTPUT"
+      
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: GitHub Packages にパッケージを公開
+        run: npm publish --workspace=packages/docusaurus
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Git tag and push changes
+        if: steps.get-version.outputs.changed == 'true'
+        run: |
+          git push origin main
+          git tag -a "v${{ steps.get-version.outputs.version }}" -m "Release version ${{ steps.get-version.outputs.version }}"
+          git push origin "v${{ steps.get-version.outputs.version }}"         

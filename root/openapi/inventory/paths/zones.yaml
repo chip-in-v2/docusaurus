@@ -1,0 +1,111 @@
+put:
+  tags:
+    - zone
+  summary: Update an existing zone.
+  operationId: updateZone
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Update an existent zone in the SPN
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/Zone.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Zone.yaml'
+    '400':
+      description: Invalid URN supplied
+    '404':
+      description: Zone not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+post:
+  tags:
+    - zone
+  summary: Add a new zone to the API gateway.
+  operationId: addZone
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Create a new zone in the relam
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/Zone.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Zone.yaml'
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+get:
+  tags:
+    - zone
+  summary: Finds Zones
+  operationId: listZones
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: query
+      in: query
+      description: Query parameters for filtering zones
+      required: false
+      schema:
+        $ref: '../schemas/QueryParameter.yaml'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of zones.
+        If no zones are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/Zone.yaml'
+    '400':
+      description: Invalid status value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

@@ -1,0 +1,86 @@
+openapi: 3.1.1
+info:
+  title: Chip-in Wait for Services API
+  description: |-
+    これはChip-in の仮想ホストで提供されるサービスが利用可能になるのを待つためのAPIの仕様です。
+  contact:
+    email: mitsuru@procube.jp
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://127.0.0.1:8080
+security: 
+  -  bearerAuth: []
+paths:
+  '/.waitforServices':
+    get:
+      summary: Wait for Services.
+      operationId: waitforServices
+      parameters: 
+        - name: "services"
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+          description: |-
+            A comma-separated list of service URNs to wait for.
+            The API will return when all specified services are available.
+          example:
+            - urn:chip-in:service:example-realm:example-service
+            - urn:chip-in:service:example-realm:another-service
+      responses:
+        '200':
+          description: |-
+            The list of available service URNs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - urn:chip-in:service:example-realm:example-service
+                  - urn:chip-in:service:example-realm:another-service
+        '404':
+          description: |-
+            The list of service URNs which is not found in SPN Hub.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - urn:chip-in:service:example-realm:example-service
+                  - urn:chip-in:service:example-realm:another-service
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components: 
+  schemas:  
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+      additionalProperties: false               
+  securitySchemes:
+    bearerAuth: # セキュリティスキームの定義
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

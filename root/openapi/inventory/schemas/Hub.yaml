@@ -1,0 +1,61 @@
+type: object
+required:
+  - name
+  - title
+  - fqdn
+  - serverCert
+  - serverCertKey
+properties:
+  name:
+    type: string
+    description: |-
+      SPN Hub の名前。URN の一部として使用される。
+      文字列は小文字英字、数字、ハイフン、アンダースコアのみを含むことができる。
+    example: hub1
+  realm:
+    type: string
+    readOnly: true
+    format: urn
+    description: |-
+      SPN Hub が属する realm の URN。
+    example: urn:chip-in:realm:example-realm
+  urn:
+    type: string
+    readOnly: true
+    description: |-
+      SPN Hub のURN。URNは、SPN Hubを一意に識別するための文字列で、以下の形式で構成される。
+      urn:chip-in:network:{realm}:{name}
+    example: urn:chip-in:network:example-realm:hub1
+  title:
+    type: string
+    description: SPN Hub の日本語名称です。
+    example: CMSシステムプライベートネットワークハブ
+  description:
+    type: string
+    description: SPN Hub の説明文です。
+    example: CMSシステム用のプライベートネットワークのハブ
+  fqdn:
+    type: string
+    description: SPN Hub のサーバのFQDN
+    example: core.stg.chip-in.net
+  serverPort:
+    type: integer
+    description: SPN Hub のサーバのポート番号。デフォルトは 443
+    example: 443
+  serverCert:
+    type: string
+    description: |-
+      mTLSにおけるサーバ証明書(PEM形式)の文字列。
+      SPN Hub のサーバは、この証明書を使用してクライアントとの通信を暗号化する。
+    example: |-
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+  serverCertKey:
+    type: string
+    description: |-
+      mTLSにおけるサーバ証明書の秘密鍵(PEM形式)の文字列。
+      SPN Hub のサーバは、この秘密鍵を使用してクライアントとの通信を暗号化する。
+    example: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      -----END RSA PRIVATE KEY-----
+additionalProperties: false

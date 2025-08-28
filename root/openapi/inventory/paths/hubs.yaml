@@ -1,0 +1,111 @@
+put:
+  tags:
+    - hub
+  summary: Update an existing hub.
+  operationId: updateHub
+  parameters:
+    - name: realm
+      in: path
+      description: relam which hub belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Update an existent hub in the SPN
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/Hub.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Hub.yaml'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Hub not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+post:
+  tags:
+    - hub
+  summary: Add a new hub to the SPN.
+  operationId: addHub
+  parameters:
+    - name: realm
+      in: path
+      description: relam which hub belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Create a new hub in the realm
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/Hub.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Hub.yaml'
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+get:
+  tags:
+    - hub
+  summary: Finds Hubs
+  operationId: listHubs
+  parameters:
+    - name: realm
+      in: path
+      description: relam which hub belogs to
+      required: true
+      schema:
+        type: string
+    - name: query
+      in: query
+      description: Query parameters for filtering hubs
+      required: false
+      schema:
+        $ref: '../schemas/QueryParameter.yaml'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of hubs.
+        If no hubs are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/Hub.yaml'
+    '400':
+      description: Invalid status value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

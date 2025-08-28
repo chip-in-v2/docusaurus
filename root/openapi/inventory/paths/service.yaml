@@ -1,0 +1,80 @@
+get:
+  tags:
+    - service
+  summary: Find service by urn.
+  operationId: getServiceByName
+  parameters:
+    - name: realm
+      in: path
+      description: relam which service belogs to
+      required: true
+      schema:
+        type: string
+    - name: hubName
+      in: path
+      description: Name of hub which service belogs to
+      required: true
+      schema:
+        type: string
+    - name: serviceName
+      in: path
+      description: URN of service to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Service.yaml'
+    '400':
+      description: Invalid URN supplied
+    '404':
+      description: Service not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+delete:
+  tags:
+    - service
+  summary: Deletes a service.
+  operationId: deleteService
+  parameters:
+    - name: realm
+      in: path
+      description: relam which service belogs to
+      required: true
+      schema:
+        type: string
+    - name: hubName
+      in: path
+      description: Name of hub which service belogs to
+      required: true
+      schema:
+        type: string
+    - name: serviceName
+      in: path
+      description: Service URN to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Service deleted. Returns the deleted contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Service.yaml'
+    '400':
+      description: Invalid URN value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

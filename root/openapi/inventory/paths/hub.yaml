@@ -1,0 +1,68 @@
+get:
+  tags:
+    - hub
+  summary: Find hub by name.
+  operationId: getHubByName
+  parameters:
+    - name: realm
+      in: path
+      description: relam which service belogs to
+      required: true
+      schema:
+        type: string
+    - name: hubName
+      in: path
+      description: Name of hub to return
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Hub.yaml'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Hub not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+delete:
+  tags:
+    - hub
+  summary: Deletes a hub.
+  operationId: deleteHub
+  parameters:
+    - name: realm
+      in: path
+      description: relam which hub belogs to
+      required: true
+      schema:
+        type: string
+    - name: hubName
+      in: path
+      description: Hub name to delete
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successful operation, return the deleted contents.
+      content: 
+        application/json:
+          schema:
+            $ref: '../schemas/Hub.yaml'
+    '400':
+      description: Invalid Name value
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

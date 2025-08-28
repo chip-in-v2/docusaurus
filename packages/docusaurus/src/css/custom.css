@@ -1,0 +1,124 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #152e5e;
+  --ifm-color-primary-dark: #006895;
+  --ifm-color-primary-darker: #172d61;
+  --ifm-color-primary-darkest: #060606;
+  --ifm-color-primary-light: #8b7023;
+  --ifm-color-primary-lighter: #917525;
+  --ifm-color-primary-lightest: #a4852a;
+  --ifm-code-font-size: 90%;
+  --ifm-font-size-base: 14px;
+  /* --ifm-h1-font-size: 1.8 rem;
+  --ifm-h2-font-size: 1.6 rem;
+  --ifm-h3-font-size: 1.4 rem; */
+  --doc-sidebar-width: 240px !important;
+  --ifm-font-family-base: "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    Meiryo, sans-serif;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #75b4bb;
+  --ifm-color-primary-dark: #75b4bb;
+  --ifm-color-primary-darker: #75b4bb;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.markdown h1:first-child {
+  --ifm-h1-font-size: 1.8rem;
+  --ifm-heading-color: var(--ifm-color-primary-darker);
+}
+.markdown h2 {
+  --ifm-h2-font-size: 1.6rem;
+  --ifm-heading-color: var(--ifm-color-primary-darker);
+}
+.markdown h3 {
+  --ifm-h3-font-size: 1.4rem;
+  --ifm-heading-color: var(--ifm-color-primary-darker);
+}
+
+table.test-spec thead td {
+  text-align: center;
+  font-weight:bold;
+}
+
+table.test-spec thead td:nth-child(1){
+  width: 10%;
+}
+
+table.test-spec thead td:nth-child(2){
+  width: 28%;
+}
+
+table.test-spec thead td:nth-child(3){
+  width: 8%;
+}
+
+table.test-spec thead td:nth-child(4){
+  width: 54%;
+}
+
+div.waiting {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: #25c2a0;
+}
+div.need-implement {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: #dc2d1a;
+}
+div.need-test {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: #dc2d1a;
+}
+div.no-test {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: rgb(216, 196, 20);
+}
+div.no-implement {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: rgb(216, 196, 20);
+}
+div.ok {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: #25c2a0;
+}
+div.ng {
+  border: solid 1px black;
+  border-radius: 7px;
+  text-align: center;
+  background-color: #dc2d1a;
+}
+
+table.item-list,table.item-list tr, table.item-list td {
+  border: none;
+  background-color: var(--ifm-table-background);
+  padding: 2px;
+}
+table.item-list td:nth-child(1){
+  font-weight: bold;
+}

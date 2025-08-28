@@ -1,0 +1,113 @@
+put:
+  tags:
+    - virtual-host
+  summary: Update an existing virtual host.
+  operationId: updateVirtualHost
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Update an existent virtual host in the SPN
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/VirtualHost.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/VirtualHost.yaml'
+    '400':
+      description: Invalid Name supplied
+    '404':
+      description: Virtual Host not found
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+post:
+  tags:
+    - virtual-host
+  summary: Add a new virtual host to the zone.
+  operationId: addVirtualHost
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Create a new virtual host in the zone
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/VirtualHost.yaml'
+    required: true
+  responses:
+    '200':
+      description: Successful operation, return the new contents.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/VirtualHost.yaml'
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"
+get:
+  tags:
+    - virtual-host
+  summary: Finds Virtual Hosts
+  operationId: listVirtualHosts
+  parameters:
+    - name: realm
+      in: path
+      description: relam which zone belogs to
+      required: true
+      schema:
+        type: string
+    - name: query
+      in: query
+      description: Query parameters for filtering virtual hosts
+      required: false
+      schema:
+        $ref: '../schemas/QueryParameter.yaml'
+  responses:
+    '200':
+      description: |-
+        Successful operation, returns a list of virtual hosts.
+        If no virtual hosts are found, an empty array is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/VirtualHost.yaml'
+    '400':
+      description: Invalid query parameters
+    '404':
+      description: realm not found
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yaml"

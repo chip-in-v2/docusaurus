@@ -1,0 +1,13 @@
+---
+title: インベントリAPIリファレンス
+sidebar_position: 30
+hide_table_of_contents: true
+---
+import Redoc from '@theme/Redoc';
+
+:::note
+オブジェクトの urn 属性と階層構造上上位オブジェクトへのポインタ（ex. realm）は readOnly かつ必須ではありません。
+これらの属性についてはAPIから更新のためにオブジェクトを投入する時はそれらの属性は省略できますが、読み出すと必ず入っています。
+:::
+
+<Redoc id="inventory"/>

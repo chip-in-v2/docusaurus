@@ -1,0 +1,64 @@
+openapi: 3.1.1
+info:
+  title: Chip-in Inventory API
+  description: |-
+    これはChip-in のインベントリにアクセスするためのAPIである。
+    アクセス制御は別途OPAで実装される。その仕様は inventory.rego で記述されている。
+  contact:
+    email: mitsuru@procube.jp
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://127.0.0.1:8080
+security: 
+  -  bearerAuth: []
+tags:
+  - name: realm
+    description: マイクロサービスをグループ化するための論理的な区分。'/' などパスとして使用できない文字を含むことはできない。
+  - name: zone
+    description: API Gateway で外部に露出するDNS上のゾーン
+  - name: virtual-host
+    description: ゾーンに紐づく仮想ホスト。
+  - name: routing-chain
+    description: API Gateway でのルーティングチェーン。
+  - name: hub
+    description: SPNのハブ。
+  - name: service
+    description: SPN経由で提供されるマイクロサービス
+paths:
+  /realms:
+    $ref: './paths/realms.yaml'
+  /realms/{realm}:
+    $ref: './paths/realm.yaml'
+  /realms/{realm}/zones:
+    $ref: './paths/zones.yaml'
+  /realms/{realm}/zones/{zone}:
+    $ref: './paths/zone.yaml'
+  /realms/{realm}/zones/{zone}/subdomains:
+    $ref: './paths/subdomains.yaml'
+  /realms/{realm}/zones/{zone}/subdomains/{subdomain}:
+    $ref: './paths/subdomain.yaml'
+  /realms/{realm}/virtual-hosts:
+    $ref: './paths/virtual-hosts.yaml'
+  /realms/{realm}/virtual-hosts/{virtualHost}:
+    $ref: './paths/virtual-host.yaml'
+  /realms/{realm}/routing-chains:
+    $ref: './paths/routing-chains.yaml'
+  /realms/{realm}/routing-chains/{routingChainName}:
+    $ref: './paths/routing-chain.yaml'
+  /realms/{realm}/hubs:
+    $ref: './paths/hubs.yaml'
+  /realms/{realm}/hubs/{hubName}:
+    $ref: './paths/hub.yaml'
+  /realms/{realm}/hubs/{hubName}/services:
+    $ref: './paths/services.yaml'
+  /realms/{realm}/hubs/{hubName}/services/{serviceName}:
+    $ref: './paths/service.yaml'
+components:
+  securitySchemes:
+    bearerAuth: # セキュリティスキームの定義
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
