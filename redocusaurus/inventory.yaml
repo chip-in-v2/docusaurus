@@ -1664,9 +1664,9 @@ components:
           additionalProperties:
             type: string
             description: >-
-              プロパティの値は、'{{' と '}}' で囲む必要はなく、全体が RHAI の式として評価される。
+              プロパティの値は、'{{' と '}}' で囲む必要はなく、全体が evalexpr の式として評価される。
 
-              RHAI の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+              evalexpr の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
 
               ただし、結果が undefined や null の場合は "-" となる。
 
@@ -1758,10 +1758,10 @@ components:
               match:
                 type: string
                 description: >-
-                  [RHAI](https://rhai.rs/book/about/features.html)
+                  [evalexpr](https://docs.rs/evalexpr/latest/evalexpr/)
                   の式で、リクエストのパスやヘッダなどを照合するための条件を記述する。
 
-                  '{{' と '}}' で囲む必要はなく、全体が RHAI の式として評価される。
+                  '{{' と '}}' で囲む必要はなく、全体が evalexpr の式として評価される。
                 example: >-
                   request.path.starts_with("/api") &&
                   request.headers["X-Auth-Token"]
@@ -1770,37 +1770,39 @@ components:
                   - type: object
                     title: Set Session ID
                     description: >-
-                      このアクションは、CHIPIN_SESSION Cookie が存在しない場合、新しいセッションIDをを発行します。
+                      このアクションは、CHIPIN_DEVICE_CONTEXT Cookie
+                      が存在しない場合、新しいデバイスIDをを発行します。
 
-                      セッションIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で
+                      デバイスIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で
                       64文字の文字列にエンコードされます。
 
 
-                      CHIPIN_SESSION Cookie が存在する場合は、JWTを検証し、 iss, exp
+                      CHIPIN_DEVICE_CONTEXT Cookie が存在する場合は、JWTを検証し、 iss, exp
                       の妥当性をチェックします。
 
-                      sub の値をセッションIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_SESSION
+                      sub
+                      の値をデバイスIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_DEVICE_CONTEXT
                       Cookie を再発行します。
 
                       exp 以外の値は引き継がれます。
 
-                      ここで発行するセッションIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできないことに注意してください。
+                      ここで発行するデバイスIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできないことに注意してください。
 
                       セッションの有効期限が切れるまで有効です。
 
 
-                      新しくセッションIDを生成した場合、および再発行した場合はレスポンスヘッダに Cookie
-                      を以下のように追加します。
+                      新しくデバイスIDを生成した場合、および再発行した場合はレスポンスヘッダに Cookie を以下のように追加します。
 
                       ```
 
                       Set-Cookie:
-                      CHIPIN_SESSION=*JWT*;HttpOnly;Secure;SameSite=Strict;
+                      CHIPIN_DEVICE_CONTEXT=*JWT*;HttpOnly;Secure;SameSite=Strict;
 
                       ```
 
-                      サブドメインに shareCookie: true が設定されている場合は、CHIPIN_SESSION
-                      Cookie の Domain 属性にサブドメインの FQDN を設定します。
+                      サブドメインに shareCookie: true
+                      が設定されている場合は、CHIPIN_DEVICE_CONTEXT Cookie の Domain
+                      属性にサブドメインの FQDN を設定します。
 
                       これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。
 
@@ -1815,10 +1817,10 @@ components:
 
                       |:-----------|:---------|:---------------------------------|---|
 
-                      | iss        | string   | セッションIDを発行した仮想ホストのFQDN |
+                      | iss        | string   | デバイスIDを発行した仮想ホストのFQDN |
                       session_originator |
 
-                      | sub        | string   | セッションID.                      |
+                      | sub        | string   | デバイスID.                      |
                       session_id |
 
                       | iat        | integer  | 発行日時（UNIXタイムスタンプ）     |
@@ -1837,9 +1839,9 @@ components:
                         type: integer
                         default: 15552000
                         description: |-
-                          セッションIDの有効期限。単位は秒で、デフォルトは 15552000 秒 (180日)。
-                          この時間の半分を過ぎると、CHIPIN_SESSION Cookie が再発行される。
-                          この時間を過ぎると、セッションIDは無効となる。
+                          デバイスIDの有効期限。単位は秒で、デフォルトは 15552000 秒 (180日)。
+                          この時間の半分を過ぎると、CHIPIN_DEVICE_CONTEXT Cookie が再発行される。
+                          この時間を過ぎると、デバイスIDは無効となる。
                         example: 15552000
                     additionalProperties: false
                   - type: object
@@ -1942,7 +1944,7 @@ components:
                   - type: object
                     title: SetVariables
                     description: |-
-                      RHAI の式を評価して、変数に値を設定するアクション。
+                      evalexpr の式を評価して、変数に値を設定するアクション。
                       このアクションは、リクエストやレスポンスの情報を参照して、変数に値を設定するために使用される。
                     required:
                       - type
@@ -1962,10 +1964,10 @@ components:
                         additionalProperties:
                           type: string
                           description: >-
-                            プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は RHAI
+                            プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は evalexpr
                             の式として評価される。
 
-                            RHAI の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+                            evalexpr の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
 
                             数値や
                             booleanの場合はそのまま出力される。オブジェクトや配列の場合は、JSON文字列に変換されて出力される。
@@ -2002,12 +2004,12 @@ components:
                         additionalProperties:
                           type: string
                           description: >-
-                            プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は RHAI
+                            プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は evalexpr
                             の式として評価される。
 
-                            RHAI の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+                            evalexpr の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
 
-                            ただし、RHAI 式の評価結果が undefined や null
+                            ただし、evalexpr 式の評価結果が undefined や null
                             の場合はヘッダは設定されず、設定済みのヘッダは削除される。
 
                             数値や

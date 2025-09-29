@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-devDesign/apigateway/bff" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">BFF | Chip-in V2</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" name="twitter:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" property="og:url" content="https://chip-in-v2.github.io/docs/devDesign/apigateway/bff"><meta data-rh="true" property="og:locale" content="ja"><meta data-rh="true" name="docusaurus_locale" content="ja"><meta data-rh="true" name="docsearch:language" content="ja"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="BFF | Chip-in V2"><meta data-rh="true" name="description" content="BFF(Backend for Frontend)機能はフロントエンドからの API アクセスに対するリバースプロキシ機能を提供します。モダンアプリケーションの BFF に求められる諸所の機能を実現して API の実装内容を軽減します。"><meta data-rh="true" property="og:description" content="BFF(Backend for Frontend)機能はフロントエンドからの API アクセスに対するリバースプロキシ機能を提供します。モダンアプリケーションの BFF に求められる諸所の機能を実現して API の実装内容を軽減します。"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://chip-in-v2.github.io/docs/devDesign/apigateway/bff"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devDesign/apigateway/bff" hreflang="ja"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devDesign/apigateway/bff" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"API　Gateway","item":"https://chip-in-v2.github.io/docs/devDesign/apigateway/"},{"@type":"ListItem","position":2,"name":"BFF","item":"https://chip-in-v2.github.io/docs/devDesign/apigateway/bff"}]}</script><link rel="stylesheet" href="/assets/css/styles.c5549363.css">
+<script src="/assets/js/runtime~main.ea8c2bd2.js" defer="defer"></script>
+<script src="/assets/js/main.60087bfb.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/chip-in-logo-text.png"><div role="region" aria-label="メインコンテンツまでスキップ"><a class="skipToContent_G6ar" href="#__docusaurus_skipToContent_fallback">メインコンテンツまでスキップ</a></div><nav aria-label="ナビゲーション" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="ナビゲーションバーを開く" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--light_DIHH"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--dark_Bv2M"></div><b class="navbar__title text--truncate"></b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/devDesign/index">設計書</a><a class="navbar__item navbar__link" href="/docs/devSpecification/SPN/overview">仕様書/テスト項目書</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/orgs/chip-in-v2/repositories" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_awgD"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_OLSw colorModeToggle_Hg9V"><button class="clean-btn toggleButton_wYmb toggleButtonDisabled_vaDU" type="button" disabled="" title="システムモード" aria-label="ダークモードを切り替える(現在はシステムモード)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ lightToggleIcon_Sxwe"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ darkToggleIcon_Yem1"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ systemToggleIcon_txm5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_bmvg"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_UyTV"><div class="docsWrapper_XLvK"><button aria-label="先頭へ戻る" class="clean-btn theme-back-to-top-button backToTopButton_z1FD" type="button"></button><div class="docRoot_HciC"><aside class="theme-doc-sidebar-container docSidebarContainer_e5ai"><div class="sidebarViewport_N8x0"><div class="sidebar_vJCc"><nav aria-label="ドキュメントのサイドバー" class="menu thin-scrollbar menu_qiME"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/devDesign/index">概要</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/devDesign/models/overview">概念モデル</a><button aria-label="&#x27;概念モデル&#x27;の目次を開く" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/devDesign/spn">SPN</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/docs/devDesign/apigateway/">API　Gateway</a><button aria-label="&#x27;API　Gateway&#x27;の目次を隠す" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/devDesign/apigateway/bff">BFF</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/devDesign/apigateway/m2m">M2M通信</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/devDesign/apigateway/cspheader">CSPヘッダの設定</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/devDesign/apigateway/service-supply-chain">CSP ヘッダのサービスサプライチェーン攻撃に対する効果</a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_namt"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_YAwJ"><div class="docItemContainer_Rv5Z"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_zCmv" aria-label="パンくずリストのナビゲーション"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="ホームページ" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_JFrk"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/devDesign/apigateway/"><span>API　Gateway</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">BFF</span></li></ul></nav><div class="tocCollapsible_O_Qc theme-doc-toc-mobile tocMobile_tjDr"><button type="button" class="clean-btn tocCollapsibleButton_htYj">このページの見出し</button></div><div class="theme-doc-markdown markdown"><header><h1>BFF</h1></header>
+<p>BFF(Backend for Frontend)機能はフロントエンドからの API アクセスに対するリバースプロキシ機能を提供します。モダンアプリケーションの BFF に求められる諸所の機能を実現して API の実装内容を軽減します。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="ルートの分類">ルートの分類<a href="#ルートの分類" class="hash-link" aria-label="ルートの分類 への直接リンク" title="ルートの分類 への直接リンク">​</a></h2>
+<p>BFFではアクセスのルート(Route)を以下の4つに分類して処理します。</p>
+<table><thead><tr><th>分類</th><th>説明</th><th>未認証アクセス時の挙動</th></tr></thead><tbody><tr><td>Landing Routes</td><td>未認証のユーザが最初にアクセスするパス</td><td>200 Ok</td></tr><tr><td>App Shell Routes</td><td>シェルページのHTMLを返すパスパターン</td><td>302 IdPへのリダイレクト</td></tr><tr><td>Asset Routes</td><td>JavaScript, CSS 画像などのコンテンツ</td><td>200 Ok</td></tr><tr><td>Protected Routes</td><td>認証済みのユーザのみがアクセスできるパス</td><td>401 アクセス拒否</td></tr></tbody></table>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="セッション期限切れ問題">セッション期限切れ問題<a href="#セッション期限切れ問題" class="hash-link" aria-label="セッション期限切れ問題 への直接リンク" title="セッション期限切れ問題 への直接リンク">​</a></h3>
+<p>前述のように分類した上でアプリケーションの実装者は、JavaScript から Protected Routes にアクセスする場合にセッション切れによって401 Unauthorizedレスポンスを受け取った場合を考慮する必要があります。
+API呼び出しはもちろんのこと、アプリケーションコードで直接制御していないライブラリが Protected Routes にアクセスする場合も対応が必要です。</p>
+<p>MapLibreのようなライブラリは、地図の表示や操作に応じて、バックグラウンドで継続的に地図タイルやスタイル定義ファイルなどのリソースをサーバーに要求します。これらのリソースが Protected Routes にある場合、セッションが切れると問題が発生します。</p>
+<p>以下にその発生例のシーケンスを示します。</p>
+<ol>
+<li>ユーザーが画面を放置し、BFFの認証セッションがタイムアウトします。</li>
+<li>ユーザーが地図をズームしたり、移動させたりします。</li>
+<li>MapLibreライブラリは、表示されていないエリアの新しい地図タイル（例: <code>/api/tiles/{z}/{x}/{y}.pbf</code>）を取得しようと<code>fetch</code>リクエストを送信します。</li>
+<li>サーバーはリクエストに有効なセッションがないため、<code>401 Unauthorized</code>を返します。</li>
+<li>MapLibreは地図タイル（バイナリデータ）を期待していましたが、代わりに<code>401</code>のステータスコード（場合によってはログインページのHTML）を受け取ります。</li>
+<li>ライブラリはこれをエラーとして処理し、<strong>該当するタイルは描画されません</strong>。結果として、地図の一部が灰色や空白のままになり、ユーザーから見ると <strong>「地図が壊れた・崩れた」</strong> 状態になります。</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="セッション期限切れ対策">セッション期限切れ対策<a href="#セッション期限切れ対策" class="hash-link" aria-label="セッション期限切れ対策 への直接リンク" title="セッション期限切れ対策 への直接リンク">​</a></h3>
+<p>この問題に対処するには、ライブラリ自身にエラー処理をさせるのではなく、アプリケーション全体でネットワークリクエストを制御する層を設けるのが最も堅牢なアプローチです。</p>
+<p>グローバルなfetchのインターセプトが最も汎用的で強力な方法です。アプリケーション内の<strong>すべての<code>fetch</code>リクエストを一元的に監視</strong>し、<code>401</code>エラーが発生した場合に App Shell Routes でのリロードを強制的に実行させます。</p>
+<p><strong>仕組み:</strong></p>
+<ol>
+<li>アプリケーションの起動時に、ブラウザ標準の<code>fetch</code>関数をラップ（上書き）する独自の関数を定義します。</li>
+<li>このラッパー関数は、実際のリクエストを実行した後、レスポンスのステータスコードをチェックします。</li>
+<li>もしステータスが<code>401</code>であった場合、<strong>元の呼び出し元（MapLibreなど）にレスポンスを返さず</strong>、その場で App Shell Routes でのリロードを実行します。</li>
+</ol>
+<p><strong>メリット:</strong></p>
+<ul>
+<li><strong>一元管理</strong>: この仕組みを一つ導入するだけで、MapLibreだけでなく、将来導入するかもしれない他のどんなライブラリからのリクエストも保護できます。</li>
+<li><strong>関心の分離</strong>: ライブラリはリソースの取得に専念でき、アプリケーションは認証状態の管理に専念できます。</li>
+</ul>
+<p><code>axios</code>のようなHTTPクライアントライブラリには「インターセプター」としてこの機能が組み込まれています。標準の<code>fetch</code>で実現する場合は、自身でラッパーを実装します。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="レンダリング手法">レンダリング手法<a href="#レンダリング手法" class="hash-link" aria-label="レンダリング手法 への直接リンク" title="レンダリング手法 への直接リンク">​</a></h2>
+<p>BFFの最適な挙動について考察するためにモダンなアプリケーションのレンダリング手法を分類します。Next.js などのモダンなアプリケーション向けのミドルウェアでは、以下のようにレンダリング手法をページ単位で使い分けることができます。</p>
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:left">SSR (Server-Side Rendering)</th><th style="text-align:left">SSG (Static Site Generation)</th><th style="text-align:left">CSR (Client-Side Rendering)</th></tr></thead><tbody><tr><td style="text-align:left"><strong>最適なケース</strong></td><td style="text-align:left">ユーザー毎に内容が変わる動的なページ</td><td style="text-align:left">ブログ記事、マーケティングサイト、ドキュメント</td><td style="text-align:left">ログイン後の管理画面ダッシュボード</td></tr><tr><td style="text-align:left"><strong>SEO</strong></td><td style="text-align:left"><strong>◎ 最適</strong></td><td style="text-align:left"><strong>◎ 最適</strong></td><td style="text-align:left">△ （対応が別途必要）</td></tr><tr><td style="text-align:left"><strong>初回表示速度</strong></td><td style="text-align:left"><strong>◎ 高速</strong></td><td style="text-align:left"><strong>◎ 最速</strong></td><td style="text-align:left">× （遅い）</td></tr><tr><td style="text-align:left"><strong>データの鮮度</strong></td><td style="text-align:left"><strong>常に最新</strong></td><td style="text-align:left">ビルド時のデータ</td><td style="text-align:left">常に最新（クライアントで取得）</td></tr><tr><td style="text-align:left"><strong>Next.jsの関数</strong></td><td style="text-align:left"><code>getServerSideProps</code></td><td style="text-align:left"><code>getStaticProps</code></td><td style="text-align:left"><code>useEffect</code> などでデータ取得</td></tr></tbody></table>
+<p>モダンなアプリケーションでは React などを使用して CSR を使用するのが一般的ですが、「SEOを最重要視する」場合と「初回表示を高速化したい」場合は SSG/SSR を使用することになります。</p>
+<p>しかし、この BFF では以下の理由で SSR の利用は推奨しません。</p>
+<ul>
+<li>SSRでアクセスしているユーザの属性を取得するためには SSR のシェルページを Protected Routes に置く必要があるが、セッション切れとなった場合に BFF が 401 のHTMLを返すため、スマートな画面遷移を提供できない</li>
+</ul>
+<p>また、CSRを実装する際は、前述のセッション期限切れ対策を実装する必要があります。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="bffの機能">BFFの機能<a href="#bffの機能" class="hash-link" aria-label="BFFの機能 への直接リンク" title="BFFの機能 への直接リンク">​</a></h2>
+<p>Web プロキシのコンフィグレーションでロケーション(FQDN+パスのパターンで特定)を指定してBFFを追加できます。
+BFFは以下の機能を提供します。</p>
+<ul>
+<li>Open ID Connect プロトコルで IdP を呼び出し、IDトークンとアクセストークンを取得</li>
+<li>IDトークンとアクセストークンをセッション情報として構成情報データベースに保存</li>
+<li>デバイスIDをセキュアなCookie（HttpOnly, Secure, SameSite=Strict）を発行</li>
+<li>デフォルトで Robot.txt を返して検索ロボットの巡回を拒否</li>
+<li>静的コンテンツを起動時にロードして配信</li>
+<li>キャッシュバスター付きのパスを持つ静的コンテンツのバージョンアップ対応</li>
+<li>単純なリクエストを拒否（400を返す）</li>
+<li>必要に応じて HTTPレスポンスに CORS 関係のヘッダを追加</li>
+<li>必要に応じて HTTPレスポンスに CSPヘッダを追加</li>
+<li>必要に応じて HTTPレスポンスに X-Frame-Options ヘッダを追加</li>
+<li>必要に応じてセッション情報の内容を取得するAPIを提供</li>
+<li>App Shell Routes に対するGETリクエストに対して IdP へのリダイレクトを返す</li>
+<li>必要に応じてセッション情報の一覧取得（自分の接続中のセッションの確認）・削除（管理者による強制ログアウト）を別のBFFを経由して行える API を提供</li>
+</ul>
+<div class="theme-admonition theme-admonition-info admonition_IZjC alert alert--info"><div class="admonitionHeading_uVvU"><span class="admonitionIcon_HiR3"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>備考</div><div class="admonitionContent_bl22"><p>CSRF防御について CSRFトークンを発行するという機能を追加することも可能であるが、セキュアなCookieの発行と単純なリクエストの拒否で十分であると考えています。</p></div></div>
+<div class="theme-admonition theme-admonition-note admonition_IZjC alert alert--secondary"><div class="admonitionHeading_uVvU"><span class="admonitionIcon_HiR3"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>注記</div><div class="admonitionContent_bl22"><p>バックエンドのコードがリバースプロキシを前提としないアプリの場合、以下のような機能が必要になる可能性があるが、 API Gateway はこれを実装しない</p><ul>
+<li>バックエンドが返す Location ヘッダ値の書き換え</li>
+<li>バックエンドが返す HTML/JavaScript 内の文字列の書き換え（gzip による圧縮や Transfer-Encoding: chunked に対応する必要あり）</li>
+</ul></div></div>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="デバイスコンテキスト">デバイスコンテキスト<a href="#デバイスコンテキスト" class="hash-link" aria-label="デバイスコンテキスト への直接リンク" title="デバイスコンテキスト への直接リンク">​</a></h3>
+<p>CHIPIN_DEVICE_CONTEXT Cookie でアクセス元デバイスを識別しますが、攻撃などで負荷がかからないようにサーバ側での管理は行わず JWT の発行にとどめます。デバイスコンテキストのデバイスIDをログに記録することによって、以下のような場合でもアクセスを串刺しにできます。</p>
+<ul>
+<li>ブラウザを開いたままログアウトして別のユーザでログインしなおした場合</li>
+<li>SP にアクセスして認証サーバにリダイレクトされた場合</li>
+</ul>
+<p>また、ドメイン内でデバイスコンテキストを共有できます。</p>
+<h4 class="anchor anchorWithStickyNavbar_fF9Z" id="cookieの属性">COOKIEの属性<a href="#cookieの属性" class="hash-link" aria-label="COOKIEの属性 への直接リンク" title="COOKIEの属性 への直接リンク">​</a></h4>
+<p>CHIPIN_DEVICE_CONTEXT Cookie は HttpOnly, Secure, SameSite=Strict 属性を持ち、セキュアな Cookie として扱われます。また、Expires 属性を設定して、セッションの有効期限を指定します。</p>
+<h4 class="anchor anchorWithStickyNavbar_fF9Z" id="jwtの内容">JWTの内容<a href="#jwtの内容" class="hash-link" aria-label="JWTの内容 への直接リンク" title="JWTの内容 への直接リンク">​</a></h4>
+<p>CHIPIN_DEVICE_CONTEXT Cookie には JWT が含まれ、以下の情報が含まれます。</p>
+<ul>
+<li>発行者(iss)</li>
+<li>デバイスID(sub)</li>
+<li>初回発行日時(iat)</li>
+<li>有効期限(exp)
+JWTの署名には、API Gateway の秘密鍵が使用されます。これにより、デバイスIDの改ざんを防ぎます。</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_fF9Z" id="デバイスidの管理">デバイスIDの管理<a href="#デバイスidの管理" class="hash-link" aria-label="デバイスIDの管理 への直接リンク" title="デバイスIDの管理 への直接リンク">​</a></h4>
+<p>ユーザが BFF にアクセスすると、CHIPIN_DEVICE_CONTEXT Cookie が存在しない場合、BFFは新しいデバイスIDをを発行します。
+デバイスIDはPRNG（擬似乱数生成器）を使用して生成された9バイトの数値で、base64で 12文字の文字列にエンコードされます。</p>
+<p>CHIPIN_DEVICE_CONTEXT Cookie が存在する場合は、JWTを検証し、 iss, exp の妥当性をチェックします。
+sub の値をデバイスIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_DEVICE_CONTEXT Cookie を再発行します。
+このとき、exp 以外の値は引き継がれます。
+デバイスIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできません。セッションの有効期限が切れるまで有効です。</p>
+<p>新しくデバイスIDを生成した場合、および再発行した場合はレスポンスヘッダに Set-Cookie: CHIPIN_DEVICE_CONTEXT=<strong>JWT</strong>;HttpOnly;Secure;SameSite=Strict; を追加します。
+サブドメインに shareCookie: true が設定されている場合は、CHIPIN_DEVICE_CONTEXT Cookie の Domain 属性にサブドメインの FQDN を設定します。これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。</p>
+<h4 class="anchor anchorWithStickyNavbar_fF9Z" id="cookieの利用">COOKIEの利用<a href="#cookieの利用" class="hash-link" aria-label="COOKIEの利用 への直接リンク" title="COOKIEの利用 への直接リンク">​</a></h4>
+<p>リクエストコンテキストの変数にデバイスコンテキストの内容が設定されます。
+この変数を参照してログに出力したり、バックエンドのロジックに渡したりすることができます。</p>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="認証済みセッション">認証済みセッション<a href="#認証済みセッション" class="hash-link" aria-label="認証済みセッション への直接リンク" title="認証済みセッション への直接リンク">​</a></h3>
+<p>API Gateway から OIDC の認証サービスを呼び出すことによって認証を行うことができます。
+以下に OIDC の認証サービスと連携する場合のシーケンスを示します。</p>
+<img decoding="async" loading="lazy" src="https://www.plantuml.com/plantuml/svg/bLHBJkD04DttANfQB2OIkS0i42COeQnWmGMCQObHFaRO0R5BgW0518CcC7md2r20W41y8fY4H1o6YecFWTmH7ZiumMnwK_tUgthr-MBDoBJavgocovGsnOPDIvkpikaKimldxUsAarlcyVWG9zmXF2Su9NZunWVChAvBq_mg20k4IBXBU43O9AWH59sZIhlyA6BCZr8qulj4WezfbbpG5eMVP-p7f8YnGBYlhdEnuLIQzjcsStL7U46O8oWJNX9S4nP2fPDoKKyPMbAyvt5Eyo-tu2RWVVgWwYk26wLOzGhdSMvAY-k6aVmfmpBm7FsGoZCmMXCIeuE4lmdgXDSk0QuEZazE41JjvHDxxJ2w6-548iOoXYMvCI_dV43MyOx9p3Htur7D6q-CZl0Ebg3QaMarzYY_4Tf8uUSH_QUeYpLqejwIV3V5JILPjJTtxAVTNZKJ7BlVeA5C-ezYAlS_RkA81Fy8JmBXzlwZSxJUqwkU5IadweGbTpoW7apB3s9-EOBYY1f3of-r6dkjsY-VSkGT2zdjV2tYilNVyuWrl9J_1WSia7f7I3MxIhYYtYM2UzNxBTUia0FJxxiYVCwLUlUYsuzFdQnGUDGZqGtrBiImp4ndqwbN" alt="Test" class="img__Ss2">
+<p>上記の動作は API Gateway から呼び出された認証サービスによって行われます。認証に成功すると、デバイスコンテキストで発行されたデバイスIDをキーにしてセッションオブジェクトをメモリ上に作成し、そこにユーザIDなど認証で得られたユーザの属性情報を保持します。
+認証済みセッションの管理は認証サービスにより行われます。認証サービスは前述のデバイスIDをキーにしてデータベース上にセッション情報を保存します。セッション情報にはユーザIDや所属など RBAC, ABAC で利用するための属性情報が含まれます。</p>
+<h4 class="anchor anchorWithStickyNavbar_fF9Z" id="ログイン記録">ログイン記録<a href="#ログイン記録" class="hash-link" aria-label="ログイン記録 への直接リンク" title="ログイン記録 への直接リンク">​</a></h4>
+<p>認証に成功すると、ログイン記録データベースにログインの記録を書き込みます。ログインの記録には以下のものが含まれます。</p>
+<ul>
+<li>ユーザID</li>
+<li>ログイン日時</li>
+<li>ログアウト日時</li>
+<li>ログアウト理由</li>
+<li>ロケーション</li>
+<li>デバイスID</li>
+</ul>
+<p>ユーザのアクセス元グローバルIPをキーとしてロケーションを特定します。<a href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/" target="_blank" rel="noopener noreferrer">GeoLite2 City</a> により、その地理情報を特定します。特定した地理情報のネットワークアドレス（CIDR）をロケーションとします。また、<a href="https://dev.maxmind.com/geoip/docs/databases/asn/" target="_blank" rel="noopener noreferrer">GeoLite2 ASN</a> によりグローバルIPの管理組織も特定します。それらの情報をロケーションをキーとしてロケーションテーブルに登録します。</p>
+<p>また、同じ内容をサーバのログとしても出力します。このときはログイン記録データベースに問い合わせて以下の情報を追加します。</p>
+<ul>
+<li>そのユーザがそのデバイスからログインするのが初めてかどうか</li>
+<li>そのユーザがそのロケーションからログインするのが初めてかどうか</li>
+</ul>
+<p>このログを監視することで、ユーザが新しい環境やネットワークからログインした場合にアラートを上げるなどの機能を実装できます。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="エラーレスポンス調整機能">エラーレスポンス調整機能<a href="#エラーレスポンス調整機能" class="hash-link" aria-label="エラーレスポンス調整機能 への直接リンク" title="エラーレスポンス調整機能 への直接リンク">​</a></h2>
+<p>API Gateway がブラウザにエラーを返す場合、そのボディ部の内容については以下のような課題がある。</p>
+<ul>
+<li>トップページのアクセスにおいて API Gateway の内部で発生する 400番台、500番台のエラーについてアプリケーションの Web UI のデザインにあわせた HTML を表示したい</li>
+<li>トップページ以外のアクセスにおいて HTML を返してもエンドユーザに表示されるわけではないので無意味である</li>
+<li>API のアクセスにおいて、 API Gateway の内部で 400番台、500番台のエラが発生した場合、 Accept ヘッダーにない Content-Type などAPIの呼び出し側が想定していないものを返すのはアプリケーションのエラー処理を複雑にする（間のリバースプロキシが入っている場合のエラー処理を追加しなければならない）
+これらの問題に対応するために</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="コンテントセキュリティポリシー管理">コンテントセキュリティポリシー管理<a href="#コンテントセキュリティポリシー管理" class="hash-link" aria-label="コンテントセキュリティポリシー管理 への直接リンク" title="コンテントセキュリティポリシー管理 への直接リンク">​</a></h2>
+<p>CSPヘッダーを付与する</p>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="csp違反記録サービス">CSP違反記録サービス<a href="#csp違反記録サービス" class="hash-link" aria-label="CSP違反記録サービス への直接リンク" title="CSP違反記録サービス への直接リンク">​</a></h3>
+<p>（詳細未執筆）</p>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="iframe-管理">iframe 管理<a href="#iframe-管理" class="hash-link" aria-label="iframe 管理 への直接リンク" title="iframe 管理 への直接リンク">​</a></h3>
+<p>X-Frame-Options ヘッダーを付与する。（詳細未執筆）</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="アプリケーションログ記録サービス">アプリケーションログ記録サービス<a href="#アプリケーションログ記録サービス" class="hash-link" aria-label="アプリケーションログ記録サービス への直接リンク" title="アプリケーションログ記録サービス への直接リンク">​</a></h2>
+<p>SPAでは、ユーザの操作ごとにサーバへのアクセスがあるわけではないので、アクセスログではユーザがどのような操作をしたかを特定することはできません。
+また、クライアント側でエラーやワーニングが出た場合もサーバではその内容を知ることはできません。そこで、ユーザの操作ログやエラーログを受け付けてサーバ側で記録する機能を提供します。</p>
+<p><a href="https://github.com/procube-open/pino-transmit-http" target="_blank" rel="noopener noreferrer">pino HTTP送信モジュール</a>を推奨。</p>
+<h3 class="anchor anchorWithStickyNavbar_fF9Z" id="wafサービス">WAFサービス<a href="#wafサービス" class="hash-link" aria-label="WAFサービス への直接リンク" title="WAFサービス への直接リンク">​</a></h3>
+<p><a href="https://modsecurity.org/" target="_blank" rel="noopener noreferrer">ModSerurity</a>にSPNエージェントをサイドカーとして付与して提供します。</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="ドキュメントページ"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/devDesign/apigateway/"><div class="pagination-nav__sublabel">前へ</div><div class="pagination-nav__label">API　Gateway</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/devDesign/apigateway/m2m"><div class="pagination-nav__sublabel">次へ</div><div class="pagination-nav__label">M2M通信</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_TN1Q thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#ルートの分類" class="table-of-contents__link toc-highlight">ルートの分類</a><ul><li><a href="#セッション期限切れ問題" class="table-of-contents__link toc-highlight">セッション期限切れ問題</a></li><li><a href="#セッション期限切れ対策" class="table-of-contents__link toc-highlight">セッション期限切れ対策</a></li></ul></li><li><a href="#レンダリング手法" class="table-of-contents__link toc-highlight">レンダリング手法</a></li><li><a href="#bffの機能" class="table-of-contents__link toc-highlight">BFFの機能</a><ul><li><a href="#デバイスコンテキスト" class="table-of-contents__link toc-highlight">デバイスコンテキスト</a></li><li><a href="#認証済みセッション" class="table-of-contents__link toc-highlight">認証済みセッション</a></li></ul></li><li><a href="#エラーレスポンス調整機能" class="table-of-contents__link toc-highlight">エラーレスポンス調整機能</a></li><li><a href="#コンテントセキュリティポリシー管理" class="table-of-contents__link toc-highlight">コンテントセキュリティポリシー管理</a><ul><li><a href="#csp違反記録サービス" class="table-of-contents__link toc-highlight">CSP違反記録サービス</a></li><li><a href="#iframe-管理" class="table-of-contents__link toc-highlight">iframe 管理</a></li></ul></li><li><a href="#アプリケーションログ記録サービス" class="table-of-contents__link toc-highlight">アプリケーションログ記録サービス</a><ul><li><a href="#wafサービス" class="table-of-contents__link toc-highlight">WAFサービス</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 Procube Co,Ltd. Built on 2025/09/29 14:02.</div></div></div></footer></div>
+</body>
+</html>
