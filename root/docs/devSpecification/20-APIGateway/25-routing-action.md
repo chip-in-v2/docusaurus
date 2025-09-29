@@ -2,21 +2,21 @@ import ApiSchema from '@theme/ApiSchema';
 
 # ルーティングアクション
 
-## セッションID管理
+## デバイスID管理
 
-このアクションは、CHIPIN_SESSION Cookie が存在しない場合、新しいセッションIDをを発行します。
-セッションIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で 64文字の文字列にエンコードされます。
+このアクションは、CHIPIN_DEVICE_CONTEXT Cookie が存在しない場合、新しいデバイスIDをを発行します。
+デバイスIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で 64文字の文字列にエンコードされます。
 
-CHIPIN_SESSION Cookie が存在する場合は、JWTを検証し、 iss, exp の妥当性をチェックします。
-sub の値をセッションIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_SESSION Cookie を再発行します。
+CHIPIN_DEVICE_CONTEXT Cookie が存在する場合は、JWTを検証し、 iss, exp の妥当性をチェックします。
+sub の値をデバイスIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_DEVICE_CONTEXT Cookie を再発行します。
 exp 以外の値は引き継がれます。
-セッションIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできません。セッションの有効期限が切れるまで有効です。
+デバイスIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできません。セッションの有効期限が切れるまで有効です。
 
-新しくセッションIDを生成した場合、および再発行した場合はレスポンスヘッダに Cookie を以下のように追加します。
+新しくデバイスIDを生成した場合、および再発行した場合はレスポンスヘッダに Cookie を以下のように追加します。
 ```
-Set-Cookie: CHIPIN_SESSION=*JWT*;HttpOnly;Secure;SameSite=Strict;
+Set-Cookie: CHIPIN_DEVICE_CONTEXT=*JWT*;HttpOnly;Secure;SameSite=Strict;
 ```
-サブドメインに shareCookie: true が設定されている場合は、CHIPIN_SESSION Cookie の Domain 属性にサブドメインの FQDN を設定します。
+サブドメインに shareCookie: true が設定されている場合は、CHIPIN_DEVICE_CONTEXT Cookie の Domain 属性にサブドメインの FQDN を設定します。
 これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。
 
 JWTのクレームは API Gateway のリクエストコンテキストの変数として保存されます。
@@ -24,8 +24,8 @@ JWTのクレームおよびリクエストコンテキスト上の変数名は�
 
 | クレーム名 | 型       | 説明                                |変数名|
 |:-----------|:---------|:---------------------------------|---|
-| iss        | string   | セッションIDを発行した仮想ホストのFQDN | session_originator |
-| sub        | string   | セッションID.                      | session_id |
+| iss        | string   | デバイスIDを発行した仮想ホストのFQDN | session_originator |
+| sub        | string   | デバイスID.                      | session_id |
 | iat        | integer  | 発行日時（UNIXタイムスタンプ）     | session_start_at |
 | exp        | integer  | 有効期限（UNIXタイムスタンプ）     | session_expire_at |
 

@@ -24,7 +24,7 @@ SPN セッションオブジェクトには以下が保持されます。
 |項目名|説明|
 |--|--|
 |startAt|セッション開始時刻|
-|spnSessionId|セッションID（QUIC のサーバ側コネクションIDを使用する）|
+|spnSessionId|デバイスID（QUIC のサーバ側コネクションIDを使用する）|
 |spnEndPoint|QUICコネクションの確立に使用されたクライアント証明書の Subject の値|
 |endPointType|"serviceProvider", "serviceConsumer" のいずれか|
 |serviceUrn|セッションのサービスのエンドポイントのURN|
@@ -35,7 +35,7 @@ SPN　セッションはセッションの開設時と終了時にログを出�
 |項目名|説明|
 |--|--|
 |timestamp|イベント発生時刻（ログの出力時刻と異なる場合があるのでイベント発生時の時刻を記録する）|
-|spnSessionId|セッションID（QUIC のサーバ側コネクションIDを使用する）|
+|spnSessionId|デバイスID（QUIC のサーバ側コネクションIDを使用する）|
 |spnEndPoint|QUICコネクションの確立に使用されたクライアント証明書の Subject の値|
 |eventType|"startSpnSession", "endSpnSession" のいずれか|
 |endPointType|"serviceProvider", "serviceConsumer" のいずれか|
