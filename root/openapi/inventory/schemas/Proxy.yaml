@@ -1,0 +1,27 @@
+type: object
+title: Proxy
+description: |-
+  リクエストをプロキシ先のサービスに転送するためのアクションです。
+  前フェーズまでで作成されたレスポンスは破棄され、プロキシ先サービスから返却されたものが新しいレスポンスとなります。
+  このアクションは、リクエストを別のマイクロサービスに転送するために使用されます。
+
+  バックエンドに対する接続では接続プーリングを実装するため Connection ヘッダは削除されます。cd 
+required: 
+  - type
+  - target
+properties:
+  type:
+    type: string
+    enum: [proxy]
+  target:
+    type: string
+    description: |-
+      プロキシ先サービスのURN。
+    example: '"urn:chip-in:service:example-realm:cms-service"'
+  noBody:
+    type: boolean
+    description: |-
+      true の場合、リクエストボディは転送されない。
+      デフォルトは false で、リクエストボディは転送される。
+    example: false
+additionalProperties: false

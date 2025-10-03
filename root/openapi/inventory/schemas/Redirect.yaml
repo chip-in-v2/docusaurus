@@ -1,0 +1,18 @@
+type: object
+title: Redirect
+required: 
+  -  type
+description: |-
+  リダイレクトを行うためのアクション。レスポンスの stauts は 302 に設定される。
+  リダイレクト先のURLは、レスポンスの Location ヘッダに設定される。
+  このアクションは、リクエストを別のURLに転送するために使用される。
+properties:
+  type:
+    type: string
+    enum: [redirect]
+  target:
+    type: string
+    description: |-
+      レスポンスの Location ヘッダに設定されるリダイレクト先のURL。
+    example: https://idp.example.com/login
+additionalProperties: false

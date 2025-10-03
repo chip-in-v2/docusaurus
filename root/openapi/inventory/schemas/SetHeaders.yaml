@@ -1,0 +1,35 @@
+type: object
+title: SetHeaders
+description: |-
+  HTTP ヘッダーの設定を行うためのアクション。
+  このアクションは、リクエストやレスポンスのヘッダを設定するために使用される。
+required: 
+  - type
+  - target
+  - headers
+properties:
+  type:
+    type: string
+    enum: [setHeaders]
+  target:
+    type: string
+    enum: [request, response]
+    description: |-
+      ヘッダの設定先。request の場合はリクエストヘッダ、response の場合はレスポンスヘッダ。
+    example: response
+  headers:
+    type: object
+    description: |-
+      設定するヘッダのキーと値のペア。
+    example:
+      content-type: "application/json"
+      'X-Forwarded-For': "{{request.clientIp}}"
+    additionalProperties:
+      type: string
+      description: |-
+        プロパティの値が文字列で、かつ '{{' と '}}' が含まれている場合、その部分は evalexpr の式として評価される。
+        evalexpr の式内では、リクエストやレスポンスの情報を参照して値を算出することができる。
+        ただし、evalexpr 式の評価結果が undefined や null の場合はヘッダは設定されず、設定済みのヘッダは削除される。
+        数値や booleanの場合はそのまま出力される。オブジェクトや配列の場合は、JSON文字列に変換されて出力される。
+        プロパティの値が null の場合は、ヘッダは設定されず、設定済みのヘッダは削除される。
+additionalProperties: false

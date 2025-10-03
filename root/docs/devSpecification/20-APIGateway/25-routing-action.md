@@ -19,8 +19,8 @@ Set-Cookie: CHIPIN_DEVICE_CONTEXT=*JWT*;HttpOnly;Secure;SameSite=Strict;
 サブドメインに shareCookie: true が設定されている場合は、CHIPIN_DEVICE_CONTEXT Cookie の Domain 属性にサブドメインの FQDN を設定します。
 これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。
 
-JWTのクレームは API Gateway のリクエストコンテキストの変数として保存されます。
-JWTのクレームおよびリクエストコンテキスト上の変数名は以下の通りです。
+JWTのクレームは API Gateway のリクエストオブジェクトの変数として保存されます。
+JWTのクレームおよびリクエストオブジェクト上の変数名は以下の通りです。
 
 | クレーム名 | 型       | 説明                                |変数名|
 |:-----------|:---------|:---------------------------------|---|
@@ -30,7 +30,7 @@ JWTのクレームおよびリクエストコンテキスト上の変数名は�
 | exp        | integer  | 有効期限（UNIXタイムスタンプ）     | session_expire_at |
 
 
-<ApiSchema id="inventory" pointer="#/components/schemas/RoutingChain/properties/rules/items/properties/action/oneOf/0" showExample={true} />
+<ApiSchema id="inventory" pointer="#/components/schemas/SetSessionId" showExample={true} />
 
 ## サービス確認
 
@@ -38,7 +38,7 @@ JWTのクレームおよびリクエストコンテキスト上の変数名は�
 利用可能である場合は、アクションは成功しますが、利用可能でない場合は 503 Service Unavailable エラーを返します。
 そのレスポンスでは JavaScript により /.waitforAvailable の SSE を取得してサービスが利用可能になるのを待ちます。
 
-<ApiSchema id="inventory" pointer="#/components/schemas/RoutingChain/properties/rules/items/properties/action/oneOf/1" showExample={true} />
+<ApiSchema id="inventory" pointer="#/components/schemas/CheckoutServices" showExample={true} />
 
 ## プロキシ
 
@@ -46,6 +46,36 @@ JWTのクレームおよびリクエストコンテキスト上の変数名は�
 前フェーズまでで作成されたレスポンスは破棄され、プロキシ先サービスから返却されたものが新しいレスポンスとなります。
 このアクションは、リクエストを別のマイクロサービスに転送するために使用されます。
 
-<ApiSchema id="inventory" pointer="#/components/schemas/RoutingChain/properties/rules/items/properties/action/oneOf/2" showExample={true} />
+<ApiSchema id="inventory" pointer="#/components/schemas/Proxy" showExample={true} />
 
+## リダイレクト
 
+リダイレクトを行うためのアクション。レスポンスの stauts は 302 に設定される。
+リダイレクト先のURLは、レスポンスの Location ヘッダに設定される。
+このアクションは、リクエストを別のURLに転送するために使用される。
+
+<ApiSchema id="inventory" pointer="#/components/schemas/Redirect" showExample={true} />
+
+## ジャンプ
+
+別のルーティングチェーンにリクエストを転送するためのアクション。処理中のチェーンは終了し、転送先のチェーンが新たに開始される。
+
+<ApiSchema id="inventory" pointer="#/components/schemas/Jump" showExample={true} />
+
+## 変数設定
+
+evalexpr の式を評価して、変数に値を設定するアクション。
+このアクションは、リクエストやレスポンスの情報を参照して、変数に値を設定するために使用される。
+
+<ApiSchema id="inventory" pointer="#/components/schemas/SetVariables" showExample={true} />
+
+## ヘッダー設定
+
+HTTP ヘッダーの設定を行うためのアクション。
+このアクションは、リクエストやレスポンスのヘッダを設定するために使用される。
+
+<ApiSchema id="inventory" pointer="#/components/schemas/SetHeaders" showExample={true} />
+
+## BFF 認証
+
+BFFとしての認証を行う。

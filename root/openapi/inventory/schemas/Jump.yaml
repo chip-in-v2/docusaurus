@@ -1,0 +1,17 @@
+type: object
+title: Jump
+description: |-
+  別のルーティングチェーンにリクエストを転送するためのアクション。処理中のチェーンは終了し、転送先のチェーンが新たに開始される。
+required: 
+  - type
+  - target
+properties:
+  type:
+    type: string
+    enum: [jump]
+  target:
+    type: string
+    description: |-
+      ルーティングチェーンのURN。
+    example: urn:chip-in:routing-chain:example-realm:cms-chain
+additionalProperties: false

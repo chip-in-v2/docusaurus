@@ -1,0 +1,25 @@
+type: object
+title: Checkout Services
+description: |-
+  このアクションは、SPN Hub 上で指定されたサービスが利用可能かどうかをチェックします。
+  利用可能である場合は、アクションは成功しますが、利用可能でない場合は 503 Service Unavailable エラーを返します。
+  そのレスポンスでは JavaScript により /.waitforAvailable の SSE を取得してサービスが利用可能になるのを待ちます。
+required: 
+  - type
+properties:
+  type:
+    type: string
+    enum: [checkoutServices]
+  services:
+    type: array
+    items:
+      type: string
+      format: urn
+      description: |-
+        チェックアウトするサービスのURN。URNは、サービスを一意に識別するための文字列で、以下の形式で構成される。
+        ````
+        urn:chip-in:service:{realm}:{hubName}:{name}
+        ````
+        ただし、サービスの availabilityManagement.ondemandStart の値は true でなければならない。
+      example: urn:chip-in:service:example-realm:hub1:authz-rbac
+additionalProperties: false
