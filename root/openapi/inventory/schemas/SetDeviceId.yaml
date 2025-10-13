@@ -24,14 +24,18 @@ description: |-
   |:-----------|:---------|:---------------------------------|---|
   | iss        | string   | デバイスIDを発行した仮想ホストのFQDN | session_originator |
   | sub        | string   | デバイスID.                      | session_id |
+  | cn         | string   | デバイスのCN（Common Name）     | session_cn |
   | iat        | integer  | 発行日時（UNIXタイムスタンプ）     | session_start_at |
   | exp        | integer  | 有効期限（UNIXタイムスタンプ）     | session_expire_at |
+
+  cn には初回アクセス時のユーザエージェントの文字列からOSとブラウザを識別して簡易な名前が付与されます。
+  別途、ユーザがデバイスに名前をつけた場合にこれを変更する機能を提供する予定です。
 required: 
   - type
 properties:
   type:
     type: string
-    enum: [setSessionId]
+    enum: [setDeviceId]
   expiration:
     type: integer
     default: 15552000

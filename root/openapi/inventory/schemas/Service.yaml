@@ -70,14 +70,73 @@ properties:
         description: オンデマンド起動とするか否か。デフォルトは true
       idleTimeout:
         type: integer
-        description: 通信がない状態が一定時間続くとマイクロ。 ondemadStart が true の場合のみ有効
+        description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
+      image:
+        type: string
+        description: コンテナイメージのパスとタグ
+      command:
+        type: array
+        description: コンテナの起動時に実行するコマンドとその引数のリスト。
+        items:
+          type: string
+      env:
+        type: array
+        description: コンテナの環境変数のリスト。
+        items:
+          type: object
+          required:
+            - name
+            - value
+          properties:
+            name:
+              type: string
+              description: 環境変数の名前。
+            value:
+              type: string
+              description: 環境変数の値。
+      mountPoints:
+        type: array
+        description: コンテナのマウントポイントのリスト。
+        items:
+          type: object
+          required:
+            - volumeSize
+            - target
+          properties:
+            volumeSize:
+              type: integer
+              maximum: 100
+              minimum: 1
+              description: マウントするボリュームのサイズ（GiB単位）
+            target:
+              type: string
+              description: コンテナ側のパス。
     additionalProperties: false
   singleton:
+    description: |-
+      このサービスがシングルトンであるかどうかを示すフラグ。デフォルトは false です。
+      シングルトンである場合、SPN内で常に1つのインスタンスのみが稼働します。
+      シングルトンでない場合は、複数のインスタンスが稼働する可能性があり、複数インスタンスがある場合は接続ごとに負荷分散されます。
     type: boolean
     example: true
   provider:
-    type: string
-    example: oidc-authz-provider
+    type: array
+    description: |-
+      サービスの提供者の識別子（クライアント証明書の subject の値）です。<br/>
+      urn:chip-in:end-point:{zone}:{domain}:{name}
+    items:
+      type: string
+      format: urn
+    example:
+      - oidc-idp-1
+      - oidc-idp-2
   consumers:
     type: array
-additionalProperties: false
+    description: |-
+      サービスの消費者の識別子（クライアント証明書の subject の値）のリスト。URNは、<br/>
+      urn:chip-in:end-point:{zone}:{domain}:{name}
+    items:
+      type: string
+      format: urn
+    example:
+      - urn:chip-in:end-point:example-zone:example.com:api-gateway

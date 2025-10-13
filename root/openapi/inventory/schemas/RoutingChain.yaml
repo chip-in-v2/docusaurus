@@ -57,11 +57,12 @@ properties:
           example: request.path.starts_with("/api") && request.headers["X-Auth-Token"]
         action:
           oneOf:
-            - $ref: './SetSessionId.yaml'
+            - $ref: './SetDeviceId.yaml'
             - $ref: './CheckoutServices.yaml'
             - $ref: './Proxy.yaml'
             - $ref: './Redirect.yaml'
             - $ref: './Jump.yaml'
             - $ref: './SetVariables.yaml'
             - $ref: './SetHeaders.yaml'
+            - $ref: './Authentication.yaml'
 additionalProperties: false
