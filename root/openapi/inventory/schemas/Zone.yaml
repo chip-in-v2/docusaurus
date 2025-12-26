@@ -28,7 +28,7 @@ properties:
     readOnly: true
     format: urn
     description: |-
-      ゾーンが属するレルムの名前。
+      このゾーンが属するレルムのURN。
   urn:
     type: string
     readOnly: true
