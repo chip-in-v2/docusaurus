@@ -1,5 +1,5 @@
 type: object
-title: SetDownstreamRequestHeader
+title: SetDownstreamResponseHeader
 description: |-
   Downstreamへの通信のHTTP レスポンスヘッダーの設定を行うためのアクション。
   動作は、セキュリティ上安全なUpsert（存在すれば更新し、存在しなければ新規作成する）。
@@ -9,7 +9,7 @@ required:
 properties:
   type:
     type: string
-    enum: [setDownstreamRequestHeader]
+    enum: [setDownstreamResponseHeader]
   name:
     type: string
     description: |-
