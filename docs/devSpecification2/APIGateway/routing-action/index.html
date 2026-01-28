@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-devSpecification2/APIGateway/routing-action" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">ルーティングアクション | Chip-in V2</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" name="twitter:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" property="og:url" content="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing-action"><meta data-rh="true" property="og:locale" content="ja"><meta data-rh="true" name="docusaurus_locale" content="ja"><meta data-rh="true" name="docsearch:language" content="ja"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="ルーティングアクション | Chip-in V2"><meta data-rh="true" name="description" content="BFF認証アクション"><meta data-rh="true" property="og:description" content="BFF認証アクション"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing-action"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing-action" hreflang="ja"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing-action" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.c5549363.css">
+<script src="/assets/js/runtime~main.8f7fd385.js" defer="defer"></script>
+<script src="/assets/js/main.765421d2.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/chip-in-logo-text.png"><div role="region" aria-label="メインコンテンツまでスキップ"><a class="skipToContent_G6ar" href="#__docusaurus_skipToContent_fallback">メインコンテンツまでスキップ</a></div><nav aria-label="ナビゲーション" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="ナビゲーションバーを開く" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--light_DIHH"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--dark_Bv2M"></div><b class="navbar__title text--truncate"></b></a><a class="navbar__item navbar__link" href="/docs/devDesign/index">設計書</a><a class="navbar__item navbar__link" href="/docs/devSpecification/SPN/overview">仕様書/テスト項目書</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/orgs/chip-in-v2/repositories" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_awgD"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_OLSw colorModeToggle_Hg9V"><button class="clean-btn toggleButton_wYmb toggleButtonDisabled_vaDU" type="button" disabled="" title="システムモード" aria-label="ダークモードを切り替える(現在はシステムモード)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ lightToggleIcon_Sxwe"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ darkToggleIcon_Yem1"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ systemToggleIcon_txm5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_bmvg"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_UyTV"><div class="docsWrapper_XLvK"><button aria-label="先頭へ戻る" class="clean-btn theme-back-to-top-button backToTopButton_z1FD" type="button"></button><div class="docRoot_HciC"><main class="docMainContainer_namt docMainContainerEnhanced_sRjM"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_YAwJ"><div class="docItemContainer_Rv5Z"><article><div class="tocCollapsible_O_Qc theme-doc-toc-mobile tocMobile_tjDr"><button type="button" class="clean-btn tocCollapsibleButton_htYj">このページの見出し</button></div><div class="theme-doc-markdown markdown"><header><h1>ルーティングアクション</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="bff認証アクション">BFF認証アクション<a href="#bff認証アクション" class="hash-link" aria-label="BFF認証アクション への直接リンク" title="BFF認証アクション への直接リンク">​</a></h2>
+<p>BFF認証アクション(requireAuthentication)は、本GatewayがBFFとして、OIDC認証処理の一部を肩代わりし、認証コードを保持します。このBFF認証アクションと、指定するプロキシアクション(proxy)のバックエンドに、認証コードを転送します。</p>
+<p>認証は認証スコープで特定します。レルム内で、複数のホストをまたがるルールを設定できます。
+「CHIPIN_SESSION_ID_｛認証スコープ｝」Cookie の値をキーとして、OIDC認証を行い、認証情報をセッションに保持します。</p>
+<p>ただし、クッキーの範囲制限は、ホスト制限はレルムのサブドメインプロパティで設定し、パス制限はありません。</p>
+<p>主なアクションの設定値は、</p>
+<ul>
+<li>認証スコープ (auth_scope_name)</li>
+<li>アップストリームアドレス (protected_upstream)</li>
+<li>OIDC関連設定値 (...)</li>
+</ul>
+<p>...⭐️以下、既存ドキュメントを利用して、要整理 ...</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="プロキシアクション">プロキシアクション<a href="#プロキシアクション" class="hash-link" aria-label="プロキシアクション への直接リンク" title="プロキシアクション への直接リンク">​</a></h2>
+<p>プロキシアクション(proxy)は、リクエストをプロキシ先のサービスに転送するためのアクションです。プロキシ先サービスから返却されたものがレスポンスとなります。
+このアクションは、リクエストを別のマイクロサービスに転送するために使用されます。アクションパイプラインで最後にマッチしたアップストリームが選択されます。</p>
+<p>設定に認証スコープを設定することができ、そのスコープで認証済みのセッションならば、バックエンドに認証コードが送付されます。</p>
+<p>アクションの設定値</p>
+<ul>
+<li>アップストリームのアドレス (upstream)</li>
+<li>認証スコープ (任意) (auth_scope_name)</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="ヘッダー設定アクション">ヘッダー設定アクション<a href="#ヘッダー設定アクション" class="hash-link" aria-label="ヘッダー設定アクション への直接リンク" title="ヘッダー設定アクション への直接リンク">​</a></h2>
+<p>ヘッダー設定アクション(setUpstreamRequestHeader,setDownstreamResponseHeader)は、アップストリームへのリクエストやダウンストリームへのレスポンスの、HTTP ヘッダーの設定を行うためのアクション。</p>
+<p>ヘッダの設定は、Upsert動作(既存のヘッダは削除して更新、既存ヘッダがなければ追加)です。</p>
+<p>アクションの設定値は、</p>
+<ul>
+<li>ヘッダ名文字列 (name)</li>
+<li>ヘッダ値文字列 (value)</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="リダイレクトアクション">リダイレクトアクション<a href="#リダイレクトアクション" class="hash-link" aria-label="リダイレクトアクション への直接リンク" title="リダイレクトアクション への直接リンク">​</a></h2>
+<p>リダイレクトアクション(redirect)は、リダイレクトを行うためのアクションです。レスポンス stauts は 302 に設定され、リダイレクト先のURLは Location ヘッダに設定されます。その他のヘッダ変更などのアクションは無視されます。</p>
+<p>アクションの設定値は、</p>
+<ul>
+<li>転送先のURL (url)</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="静的テキスト返却アクション">静的テキスト返却アクション<a href="#静的テキスト返却アクション" class="hash-link" aria-label="静的テキスト返却アクション への直接リンク" title="静的テキスト返却アクション への直接リンク">​</a></h2>
+<p>静的テキスト返却アクション(returnStaticText)は、短いテキストを返却し終了します。その他のヘッダ変更などのアクションは無視されます。(robot.txtを想定しています。)</p>
+<p>アクションの設定値は、</p>
+<ul>
+<li>返却HTTPステータス番号 (status)</li>
+<li>返却HTTPボディ文字列 (content)</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="サービス確認sseアクション">サービス確認SSEアクション<a href="#サービス確認sseアクション" class="hash-link" aria-label="サービス確認SSEアクション への直接リンク" title="サービス確認SSEアクション への直接リンク">​</a></h2>
+<p>⭐️要確認・未実装</p>
+<p>このアクションは、SPN Hub 上で指定されたサービスが利用可能かどうかをチェックします。
+利用可能である場合は、アクションは成功しますが、利用可能でない場合は 503 Service Unavailable エラーを返します。
+そのレスポンスでは JavaScript により /.waitforAvailable の SSE を取得してサービスが利用可能になるのを待ちます。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="hsts-ヘッダーアクション-デフォルト">HSTS ヘッダーアクション (デフォルト)<a href="#hsts-ヘッダーアクション-デフォルト" class="hash-link" aria-label="HSTS ヘッダーアクション (デフォルト) への直接リンク" title="HSTS ヘッダーアクション (デフォルト) への直接リンク">​</a></h2>
+<ul>
+<li>このアクションは必ず適用されるので、アクションルールに設定する必要はありません。</li>
+</ul>
+<p>全ての通信のレスポンスヘッダーに HSTS ヘッダーを付与します。</p>
+<p>ただし、</p>
+<ul>
+<li>レスポンスフィルタの冒頭での追加とし、他のアクションによる上書きを許容。</li>
+<li>単純追加で既存の同じヘッダがあっても追加する。</li>
+<li>一部のレスポンスフィルタを経由しないルートでは、付与されないことがある。</li>
+</ul>
+<div class="language-text codeBlockContainer_ZGJx theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_kX1v"><pre tabindex="0" class="prism-code language-text codeBlock_TAPP thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_AdAo"><span class="token-line" style="color:#393A34"><span class="token plain">Strict-Transport-Security: max-age=&lt;seconds&gt;; includeSubDomains; preload</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="デバイスid管理アクション-デフォルト">デバイスID管理アクション (デフォルト)<a href="#デバイスid管理アクション-デフォルト" class="hash-link" aria-label="デバイスID管理アクション (デフォルト) への直接リンク" title="デバイスID管理アクション (デフォルト) への直接リンク">​</a></h2>
+<div class="theme-admonition theme-admonition-note admonition_IZjC alert alert--secondary"><div class="admonitionHeading_uVvU"><span class="admonitionIcon_HiR3"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>注記</div><div class="admonitionContent_bl22"><p>== ⭐️10-overviewの類似で異なる記述を要マージ ==</p><p>デバイスIDには、CSPRNG（暗号論的擬似乱数生成器）アルゴリズムを使って9バイトの乱数を生成し、base64エンコードした12文字の文字列を使用します。
+JWTにはレルムの鍵（インベントリのレルムの signingKeyプロパティ）で署名します。
+...
+保持期間の 50% の時間を経過してアクセスすると同じデバイスIDで Cookie が再発行されます。従って、セッション保持期間よりも認証トークンのライフタイムが長い場合はライフタイムが残っているにも関わらずログアウトしてしまう場合がありますので注意が必要です。</p></div></div>
+<ul>
+<li>このアクションは必ず適用されるので、アクションルールに設定する必要はありません。</li>
+<li>ただし、クッキーの範囲制限は、ホスト制限はレルムのサブドメインプロパティで設定し、パス制限はありません。</li>
+</ul>
+<p>このアクションは、CHIPIN_DEVICE_CONTEXT Cookie が存在しない場合、新しいデバイスIDをを発行します。
+デバイスIDはPRNG（擬似乱数生成器）を使用して生成された48ビットの数値で、base64で 64文字の文字列にエンコードされます。</p>
+<p>CHIPIN_DEVICE_CONTEXT Cookie が存在する場合は、JWTを検証し、 iss, exp の妥当性をチェックします。
+sub の値をデバイスIDとして使用します。有効期限が再発行閾値を過ぎている場合は、CHIPIN_DEVICE_CONTEXT Cookie を再発行します。
+exp 以外の値は引き継がれます。
+デバイスIDはメモリ上に保存して管理しているわけではないので、サーバ側で無効化することはできません。セッションの有効期限が切れるまで有効です。</p>
+<p>新しくデバイスIDを生成した場合、および再発行した場合はレスポンスヘッダに Cookie を以下のように追加します。</p>
+<div class="language-text codeBlockContainer_ZGJx theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_kX1v"><pre tabindex="0" class="prism-code language-text codeBlock_TAPP thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_AdAo"><span class="token-line" style="color:#393A34"><span class="token plain">Set-Cookie: CHIPIN_DEVICE_CONTEXT=*JWT*;HttpOnly;Secure;SameSite=Strict;</span><br></span></code></pre></div></div>
+<p>サブドメインに shareCookie: true が設定されている場合は、CHIPIN_DEVICE_CONTEXT Cookie の Domain 属性にサブドメインの FQDN を設定します。
+これにより、同じサブドメイン配下の仮想ホスト間でセッションを共有できます。</p>
+<p>JWTのクレームは API Gateway のリクエストオブジェクトの変数として保存されます。
+JWTのクレームおよびリクエストオブジェクト上の変数名は以下の通りです。</p>
+<table><thead><tr><th style="text-align:left">クレーム名</th><th style="text-align:left">型</th><th style="text-align:left">説明</th><th>変数名</th></tr></thead><tbody><tr><td style="text-align:left">iss</td><td style="text-align:left">string</td><td style="text-align:left">デバイスIDを発行した仮想ホストのFQDN</td><td>session_originator</td></tr><tr><td style="text-align:left">sub</td><td style="text-align:left">string</td><td style="text-align:left">デバイスID.</td><td>session_id</td></tr><tr><td style="text-align:left">cn</td><td style="text-align:left">string</td><td style="text-align:left">デバイスのCN（Common Name）</td><td>session_cn</td></tr><tr><td style="text-align:left">iat</td><td style="text-align:left">integer</td><td style="text-align:left">発行日時（UNIXタイムスタンプ）</td><td>session_start_at</td></tr><tr><td style="text-align:left">exp</td><td style="text-align:left">integer</td><td style="text-align:left">有効期限（UNIXタイムスタンプ）</td><td>session_expire_at</td></tr><tr><td style="text-align:left">ただし、cn は利用者が設定した場合のみ設定されます。</td><td style="text-align:left"></td><td style="text-align:left"></td><td></td></tr></tbody></table></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="ドキュメントページ"></nav></div></div><div class="col col--3"><div class="tableOfContents_TN1Q thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#bff認証アクション" class="table-of-contents__link toc-highlight">BFF認証アクション</a></li><li><a href="#プロキシアクション" class="table-of-contents__link toc-highlight">プロキシアクション</a></li><li><a href="#ヘッダー設定アクション" class="table-of-contents__link toc-highlight">ヘッダー設定アクション</a></li><li><a href="#リダイレクトアクション" class="table-of-contents__link toc-highlight">リダイレクトアクション</a></li><li><a href="#静的テキスト返却アクション" class="table-of-contents__link toc-highlight">静的テキスト返却アクション</a></li><li><a href="#サービス確認sseアクション" class="table-of-contents__link toc-highlight">サービス確認SSEアクション</a></li><li><a href="#hsts-ヘッダーアクション-デフォルト" class="table-of-contents__link toc-highlight">HSTS ヘッダーアクション (デフォルト)</a></li><li><a href="#デバイスid管理アクション-デフォルト" class="table-of-contents__link toc-highlight">デバイスID管理アクション (デフォルト)</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Procube Co,Ltd. Built on 2026/01/28 09:06.</div></div></div></footer></div>
+</body>
+</html>

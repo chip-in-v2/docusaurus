@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-devSpecification2/APIGateway/routing" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">ルーティング処理 | Chip-in V2</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" name="twitter:image" content="https://chip-in-v2.github.io/img/devsecops.svg"><meta data-rh="true" property="og:url" content="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing"><meta data-rh="true" property="og:locale" content="ja"><meta data-rh="true" name="docusaurus_locale" content="ja"><meta data-rh="true" name="docsearch:language" content="ja"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="ルーティング処理 | Chip-in V2"><meta data-rh="true" name="description" content="API Gateway は、リクエストを適切なサービスにルーティングするための機能を提供します。以下のセクションでは、ルーティングの基本的な概念と実装方法について説明します。"><meta data-rh="true" property="og:description" content="API Gateway は、リクエストを適切なサービスにルーティングするための機能を提供します。以下のセクションでは、ルーティングの基本的な概念と実装方法について説明します。"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing" hreflang="ja"><link data-rh="true" rel="alternate" href="https://chip-in-v2.github.io/docs/devSpecification2/APIGateway/routing" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.c5549363.css">
+<script src="/assets/js/runtime~main.8f7fd385.js" defer="defer"></script>
+<script src="/assets/js/main.765421d2.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/chip-in-logo-text.png"><div role="region" aria-label="メインコンテンツまでスキップ"><a class="skipToContent_G6ar" href="#__docusaurus_skipToContent_fallback">メインコンテンツまでスキップ</a></div><nav aria-label="ナビゲーション" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="ナビゲーションバーを開く" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--light_DIHH"><img src="/img/chip-in-logo-text.png" alt="Chip-in Logo" class="themedComponent_DHUr themedComponent--dark_Bv2M"></div><b class="navbar__title text--truncate"></b></a><a class="navbar__item navbar__link" href="/docs/devDesign/index">設計書</a><a class="navbar__item navbar__link" href="/docs/devSpecification/SPN/overview">仕様書/テスト項目書</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/orgs/chip-in-v2/repositories" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_awgD"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_OLSw colorModeToggle_Hg9V"><button class="clean-btn toggleButton_wYmb toggleButtonDisabled_vaDU" type="button" disabled="" title="システムモード" aria-label="ダークモードを切り替える(現在はシステムモード)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ lightToggleIcon_Sxwe"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ darkToggleIcon_Yem1"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_KEbZ systemToggleIcon_txm5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_bmvg"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_UyTV"><div class="docsWrapper_XLvK"><button aria-label="先頭へ戻る" class="clean-btn theme-back-to-top-button backToTopButton_z1FD" type="button"></button><div class="docRoot_HciC"><main class="docMainContainer_namt docMainContainerEnhanced_sRjM"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_YAwJ"><div class="docItemContainer_Rv5Z"><article><div class="tocCollapsible_O_Qc theme-doc-toc-mobile tocMobile_tjDr"><button type="button" class="clean-btn tocCollapsibleButton_htYj">このページの見出し</button></div><div class="theme-doc-markdown markdown"><header><h1>ルーティング処理</h1></header>
+<p>API Gateway は、リクエストを適切なサービスにルーティングするための機能を提供します。以下のセクションでは、ルーティングの基本的な概念と実装方法について説明します。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="sniによる仮想ホストとレルムの特定">SNIによる仮想ホストとレルムの特定<a href="#sniによる仮想ホストとレルムの特定" class="hash-link" aria-label="SNIによる仮想ホストとレルムの特定 への直接リンク" title="SNIによる仮想ホストとレルムの特定 への直接リンク">​</a></h2>
+<p>API Gateway は最初に SNIとHostヘッダで宛先のFQDNを判定します。FQDNをキーとして、仮想ホストを特定し、レルムが決定します。
+仮装ホストが所属するレルムに設定されているルーティングチェーンを使用してリクエストを処理します。
+ただし、SNIとHostヘッダが異なる場合や、仮想ホストが登録されていない場合は、接続を拒否します。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="リクエストライフサイクル">リクエストライフサイクル<a href="#リクエストライフサイクル" class="hash-link" aria-label="リクエストライフサイクル への直接リンク" title="リクエストライフサイクル への直接リンク">​</a></h2>
+<p>以下に HTTP リクエストのライフサイクルを示します。</p>
+<ol>
+<li>HTTP　リクエストのライフサイクルは、API Gatewayがクライアント(downstream)からリクエストヘッダを読み取ったときに始まります。</li>
+<li>API Gateway はバックエンド（upstream）に接続します。再利用できる接続が既に確立されている場合、このステップはスキップされます。</li>
+<li>API Gateway はリクエストヘッダをバックエンドに送信します。</li>
+<li>リクエストヘッダが送信されると、API Gateway は二重モードに入り、同時に次の処理を実行します。<!-- -->
+<ul>
+<li>リクエストのボディ(存在する場合) をバックエンドに転送します</li>
+<li>バックエンドからのレスポンス (ヘッダとボディの両方) をクライアントに転送します</li>
+</ul>
+</li>
+<li>リクエスト/レスポンス全体が終了すると、リクエストのライフサイクルは終了し、すべてのリソースが解放されます。クライアントとの接続とバックエンドとの接続は、条件を満たせば再利用のために維持されます。</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="リクエストオブジェクト">リクエストオブジェクト<a href="#リクエストオブジェクト" class="hash-link" aria-label="リクエストオブジェクト への直接リンク" title="リクエストオブジェクト への直接リンク">​</a></h2>
+<p>ルーティングにおいてはリクエストごとにオブジェクトが作成されます。オブジェクトにはデバイスID、HTTPリクエストの属性、レスポンスヘッダなどが格納されます。
+これは以下の機能で利用されます。</p>
+<ul>
+<li>デバイスID管理アクションでデバイスIDと関連付け</li>
+<li>ルーティングチェーンの match 式で参照</li>
+<li>setHeader, addCookie アクションで参照 (*25H2では未実装)</li>
+<li>setHeader, addCookie アクションでオブジェクトの値を変更 (*25H2では未実装)</li>
+<li>ログ出力アクションの値式で参照</li>
+<li>認証アクションでセッションと関連付け</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="bff-における認証処理">BFF における認証処理<a href="#bff-における認証処理" class="hash-link" aria-label="BFF における認証処理 への直接リンク" title="BFF における認証処理 への直接リンク">​</a></h2>
+<p>BFFにおいては、 認証認可サーバ(Keycloak等) と Open ID Connect プロトコルで連携して認証を実装します。</p>
+<p>SPAのようなモダン Web アプリケーションにおいて、ブラウザ上スクリプトで認証コードを書かずに、認証に基づくアプリケーションを書くことができます。また、認証関連の情報の一部が、BFFないで処理されることで、セキュリティが向上する場合があります。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="ルーティングチェーンとアクションパイプライン">ルーティングチェーンとアクションパイプライン<a href="#ルーティングチェーンとアクションパイプライン" class="hash-link" aria-label="ルーティングチェーンとアクションパイプライン への直接リンク" title="ルーティングチェーンとアクションパイプライン への直接リンク">​</a></h2>
+<p>API Gateway ではルーティングチェーンを記述することでリクエストのライフサイクルに任意のロジック(アクション)を挿入できます。</p>
+<p>ルーティングチェーンはルールのリストであり、順にルールの match 条件を評価し、条件を満たしたルールのアクションを実行します。順序が重要で、途中で終了し以降が実行されないアクションがあることに注意してください。</p>
+<p>match 条件は、リクエストのhostnameとpathの値に対し、startsWith・endsWith・equalsの条件が利用できます。条件は1つ、または2つのandが使えます。</p>
+<p>アクションについて<a href="/docs/devSpecification2/APIGateway/routing-action">次の章</a>で説明します。</p>
+<p>API Gateway の実装ベースである Pingoraの以下のフィルタを利用します。その他のものは利用しません。特にresponse_body_filterは軽量のために利用しません。</p>
+<ul>
+<li>request_filter (初期確認、アクションパイプラインの作成、アクションパイプラインの正順で実行)</li>
+<li>upstream_peer (バックエンドへの転送)</li>
+<li>upstream_request_filter (アクションパイプラインを正順で実行し、バックエンドへのリクエストヘッダを変更)</li>
+<li>response_filter (アクションパイプラインを逆順で実行し、クライアントへのレスポンスヘッダを変更)</li>
+</ul>
+<p>重要なPingoraの制限として、upstreamを使わずにレスポンスを返すには、request_filterの時点でレスポンスを返し終了します。そのようなアクションの場合には、後段のアクションが処理されないことに注意してください。</p>
+<h2 class="anchor anchorWithStickyNavbar_fF9Z" id="サービス確認sse">サービス確認SSE<a href="#サービス確認sse" class="hash-link" aria-label="サービス確認SSE への直接リンク" title="サービス確認SSE への直接リンク">​</a></h2>
+<p>⭐️要確認</p>
+<p>API Gateway ではサービスが利用可能になるのを待つための SSE (Server-Sent Events) を提供します。(詳細は、openapiのwaitfor-servicesを参照)(*25H2では未実装)</p>
+<p>SSEは、</p>
+<ul>
+<li>SPAのフロントコードが利用するAPIで、</li>
+<li>○○の認証を通った場合に利用でき、</li>
+<li>SPN HubのサービスのURNをキーとして、以下を行うことができる。<!-- -->
+<ul>
+<li>サービス状態の取得</li>
+<li>サービスの起動のリクエスト</li>
+</ul>
+</li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="ドキュメントページ"></nav></div></div><div class="col col--3"><div class="tableOfContents_TN1Q thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#sniによる仮想ホストとレルムの特定" class="table-of-contents__link toc-highlight">SNIによる仮想ホストとレルムの特定</a></li><li><a href="#リクエストライフサイクル" class="table-of-contents__link toc-highlight">リクエストライフサイクル</a></li><li><a href="#リクエストオブジェクト" class="table-of-contents__link toc-highlight">リクエストオブジェクト</a></li><li><a href="#bff-における認証処理" class="table-of-contents__link toc-highlight">BFF における認証処理</a></li><li><a href="#ルーティングチェーンとアクションパイプライン" class="table-of-contents__link toc-highlight">ルーティングチェーンとアクションパイプライン</a></li><li><a href="#サービス確認sse" class="table-of-contents__link toc-highlight">サービス確認SSE</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Procube Co,Ltd. Built on 2026/01/28 09:06.</div></div></div></footer></div>
+</body>
+</html>
