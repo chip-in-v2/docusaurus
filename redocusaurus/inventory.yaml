@@ -1441,10 +1441,10 @@ components:
 
         ゾーンは、DNSプロバイダやACME証明書プロバイダと連携して、DNSレコードやSSL/TLS証明書の管理を行う。
       required:
-        - zone
+        - name
         - title
       properties:
-        zone:
+        name:
           type: string
           format: hostname
           description: |-
