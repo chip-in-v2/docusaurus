@@ -1,0 +1,51 @@
+type: object
+title: Require Authentication
+description: |-
+  このアクションは、OIDCの認証をBFFとして代行し、OIDC認証状態をCHIPIN_SESSION_ID Cookieをキーとするセッションに紐づけてBFFで保持します。
+  - このアクションが呼ばれた時に、OIDC認証済みであれば、BFFに保存されたアクセストークンをヘッダに付加してアップストリーム(protectedUpstream)へproxyします。
+  - このアクションが呼ばれた時に、OIDC認証済みでなければ、OIDCの認可エンドポイント(oidcAuthorizationEndpoint)へリダイレクトし、認証処理を行い、結果をBFFが保持します。
+  - OIDCの情報はBFFが管理し、アクセストークンの有効期限が切れている時は、BFFがOIDCサーバへアクセスしリフレッシュトークンを使用して新しいアクセストークンを取得します。
+  - 複数のバックエンドと認証情報を共有することができ、共有範囲を認証スコープ(authScopeName)として、ラベルをつけます。proxyアクションに認証スコープを設定すると、対応するアクセストークンをヘッダに付加します。
+required: 
+  - type
+  - authScopeName
+  - protectedUpstream
+  - oidcClientId
+  - oidcAuthorizationEndpoint
+  - oidcRecirectUrl
+  - oidcTokenEndpoint
+properties:
+  type:
+    type: string
+    enum: [requireAuthentication]
+  authScopeName:
+    type: string
+    description: |-
+      認証を共有するスコープに名前をつけます。proxyアクションで利用します。
+    example: "shop_scope"
+  protectedUpstream: 
+    type: string
+    description: |-
+      認証後に利用するプロキシ先サービスのURL。追加のパスと認証を共有する場合は、proxyアクションを利用します。
+    example: http://127.0.0.1:8082/
+  oidcClientId:
+    type: string
+    description: |-
+      セッション情報を取得するために使用する OIDC クライアントのIDを指定します。
+    example: chipin-web
+  oidcAuthorizationEndpoint:
+    type: string
+    description: |-
+      OIDC IdP の認可エンドポイントのURLを指定します。
+    example: https://auth.example.com/auth/realms/chip-in/protocol/openid-connect/auth
+  oidcRecirectUrl:
+    type: string
+    description: |-
+      OIDC の認可コードフローにおけるリダイレクトURLを指定します。
+    example: /auth/callback
+  oidcTokenEndpoint:
+    type: string
+    description: |-
+      OIDC IdP のトークンエンドポイントのURLを指定します。
+    example: https://auth.example.com/auth/realms/chip-in/protocol/openid-connect/token
+additionalProperties: false

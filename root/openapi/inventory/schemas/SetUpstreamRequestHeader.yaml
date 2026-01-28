@@ -1,0 +1,25 @@
+type: object
+title: SetUpstreamRequestHeader
+description: |-
+  Upstreamへの通信のHTTP リクエストヘッダーの設定を行うためのアクション。
+  動作は、セキュリティ上安全なUpsert（存在すれば更新し、存在しなければ新規作成する）。
+required: 
+  - name
+  - value
+properties:
+  type:
+    type: string
+    enum: [setUpstreamRequestHeader]
+  name:
+    type: string
+    description: |-
+      設定するヘッダ名
+    example:
+      "BFF-authentication"
+  value:
+    type: string
+    description: |-
+      設定するヘッダ値
+    example:
+      "authenticated"
+additionalProperties: false
