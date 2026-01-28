@@ -1463,7 +1463,7 @@ components:
           type: string
           readOnly: true
           format: urn
-          description: ゾーンが属するレルムの名前。
+          description: このゾーンが属するレルムのURN。
         urn:
           type: string
           readOnly: true
@@ -2248,7 +2248,6 @@ components:
         - name
         - urn
         - title
-        - realm
         - provider
         - consumers
       type: object
@@ -2286,7 +2285,9 @@ components:
           example: CMSシステムの認可サービスです。
         realm:
           type: string
-          description: サービスが属するレルムの名前。
+          readOnly: true
+          format: urn
+          description: このサービスが属するレルムのURN。
         availabilityManagement:
           type: object
           required:
