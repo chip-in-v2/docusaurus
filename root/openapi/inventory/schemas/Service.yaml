@@ -2,7 +2,6 @@ required:
   - name
   - urn
   - title
-  - realm
   - provider
   - consumers
 type: object
@@ -41,8 +40,10 @@ properties:
     example: CMSシステムの認可サービスです。
   realm:
     type: string
+    readOnly: true
+    format: urn
     description: |-
-      サービスが属するレルムの名前。
+      このサービスが属するレルムのURN。
   availabilityManagement:
     type: object
     required:
