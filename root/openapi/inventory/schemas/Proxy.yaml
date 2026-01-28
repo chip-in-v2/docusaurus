@@ -2,26 +2,24 @@ type: object
 title: Proxy
 description: |-
   リクエストをプロキシ先のサービスに転送するためのアクションです。
-  前フェーズまでで作成されたレスポンスは破棄され、プロキシ先サービスから返却されたものが新しいレスポンスとなります。
   このアクションは、リクエストを別のマイクロサービスに転送するために使用されます。
 
-  バックエンドに対する接続では接続プーリングを実装するため Connection ヘッダは削除されます。cd 
+  認証スコープ(authScopeName)が設定されている場合は、対応するRequire AuthenticationアクションでOIDC認証済みであれば、プロキシ先へのアクセスに、対応するアクセストークンをヘッダに付加します。
 required: 
   - type
-  - target
+  - upstream
 properties:
   type:
     type: string
     enum: [proxy]
-  target:
+  upstream:
     type: string
     description: |-
-      プロキシ先サービスのURN。
-    example: '"urn:chip-in:service:example-realm:cms-service"'
-  noBody:
-    type: boolean
+      プロキシ先サービス。
+    example: "http://127.0.0.1:8083/"
+  authScopeName:
+    type: string
     description: |-
-      true の場合、リクエストボディは転送されない。
-      デフォルトは false で、リクエストボディは転送される。
-    example: false
+      対応するRequire AuthenticationアクションでOIDC認証済みであれば、プロキシ先へのアクセスに、対応するアクセストークンをヘッダに付加します。
+    example: "shop_scope"
 additionalProperties: false
