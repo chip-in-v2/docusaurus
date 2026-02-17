@@ -38,23 +38,23 @@ properties:
     type: array
     description: |-
       ルーティングチェーンのルールのリスト。各ルールは、リクエストを処理するための条件とアクションを定義する。
-      ルールは、リクエストのパスやヘッダなどを照合し、適切なアクションを実行するために使用される。
+      ルールは、リクエストのホストまたはパスを照合し、適切なアクションを実行するために使用される。
     items:
       type: object
       required:
         - match
         - action
       description: |-
-        ルーティングチェーンのルール。各ルールは、リクエストを処理するための条件とアクションを定義する。
-        ルールは、リクエストのパスやヘッダなどを照合し、
-        適切なアクションを実行するために使用される。
+        ルーティングチェーンのルール。ルールは、リクエストを処理するための条件とアクションを定義する。
+        ルールは、リクエストのホストまたはパスを照合し、適切なアクションを実行するために使用される。
       properties:
         match:
           type: string
           description: |-
-            [evalexpr](https://docs.rs/evalexpr/latest/evalexpr/) の式で、リクエストのパスやヘッダなどを照合するための条件を記述する。
-            '{{' と '}}' で囲む必要はなく、全体が evalexpr の式として評価される。
-          example: request.path.starts_with("/api") && request.headers["X-Auth-Token"]
+            リクエストのホストまたはパスを照合するための条件を記述する。
+            hostname または request.path の単独条件、または両者の AND 条件が指定できる。
+            使用できる演算子は equals、starts_with、ends_withの3つ。
+          example: "hostname.equals('api.example.com') and request.path.starts_with('/token/')"
         action:
           oneOf:
             - $ref: './SetDeviceId.yaml'
