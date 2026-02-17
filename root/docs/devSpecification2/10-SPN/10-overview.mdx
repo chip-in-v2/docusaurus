@@ -1,0 +1,9 @@
+# SPN
+
+SPN(Service Provider Network) は Chip-in 内部で閉鎖されたプライベートなネットワークで、 mTLS 認証によって相互認証し暗号化されたQUICトンネルにより実現されます。
+SPN Hub を中心として SPN エンドポイントから QUIC プロトコルで接続することで仮想的なネットワークを構築します。
+QUIC上のストリームを TCP コネクションとして使用することで、TCP 通信と互換性を持っており、 SPN エージェントを使用することでマイクロサービス間でTCP通信を行えます。
+
+![SPNSessions](imgs/SPNSessions.drawio.svg)
+
+上記はユーザが API Gateway にアクセスし、それがプロキシされて SPN 経由でロジックサービスにアクセスし、ロジックサービスが SPN 経由でDBMSにアクセスする様子を表しています。
