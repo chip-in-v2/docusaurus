@@ -1,6 +1,5 @@
 required:
   - name
-  - urn
   - title
   - provider
   - consumers
@@ -29,90 +28,93 @@ properties:
   title:
     type: string
     description: |-
-      サービスの日本語名称です。URN の一部として使用される。
+      サービスの日本語名称です。
       文字列は日本語を含むことができる。
     example: CMSシステム認可サービス
   description:
     type: string
     description: |-
-      サービスの説明文です。URN の一部として使用される。
+      サービスの説明文です。
       文字列は日本語を含むことができる。
     example: CMSシステムの認可サービスです。
   realm:
     type: string
     readOnly: true
-    format: urn
     description: |-
-      このサービスが属するレルムのURN。
+      サービスが属するレルムの名前。
   availabilityManagement:
     type: object
     required:
       - clusterManagerUrn
       - serviceId
     description: |-
-      コンテナクラスタ内でマイクロサービスのスケジュール起動、オンデマンド起動を行うためのパラメータ
-    properties:
-      clusterManagerUrn:
+      このサービスのアベイラビリティ(主に自動起動と停止)の説明です。
+    clusterManagerUrn:
+      type: string
+      description: このサービスを起動できるコンテナクラスタのクラスタマネージャサービスの URN
+    serviceId:
+      type: string
+      description: クラスタ内でのマイクロサービスのID
+    startAt:
+      type: string
+      description: 定時起動する場合の起動スケジュールの CRON 式
+      example: 0 22 ? * SUN-THU *
+    stopAt:
+      type: string
+      description: 定時停止する場合の起動スケジュールの CRON 式
+      example: 0 9 ? * MON-FRI *
+    ondemandStartOnConsumer:
+      type: boolean
+      description: オンデマンド起動とするか否か。トリガはコンシューマの準備完了。デフォルトは true
+    ondemandStartOnPayload:
+      type: boolean
+      description: オンデマンド起動とするか否か。トリガはコンシューマ側の最初のペイロード。デフォルトは true
+    idleTimeout:
+      type: integer
+      description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
+    image:
+      type: string
+      description: コンテナイメージのパスとタグ
+    command:
+      type: string
+      description: コンテナの起動時に実行するコマンド。
+    option:
+      type: array
+      description: コンテナの起動時に実行するコマンドの引数のリスト。
+      items:
         type: string
-        description: このサービスを起動できるコンテナクラスタのクラスタマネージャサービスの URN
-      serviceId:
-        type: string
-        description: クラスタ内でのマイクロサービスのID
-      startAt:
-        type: string
-        description: 定時起動する場合の起動スケジュールの CRON 式
-        example: 0 22 ? * SUN-THU *
-      stopAt:
-        type: string
-        description: 定時停止する場合の起動スケジュールの CRON 式
-        example: 0 9 ? * MON-FRI *
-      ondemandStart:
-        type: boolean
-        description: オンデマンド起動とするか否か。デフォルトは true
-      idleTimeout:
-        type: integer
-        description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
-      image:
-        type: string
-        description: コンテナイメージのパスとタグ
-      command:
-        type: array
-        description: コンテナの起動時に実行するコマンドとその引数のリスト。
-        items:
-          type: string
-      env:
-        type: array
-        description: コンテナの環境変数のリスト。
-        items:
-          type: object
-          required:
-            - name
-            - value
-          properties:
-            name:
-              type: string
-              description: 環境変数の名前。
-            value:
-              type: string
-              description: 環境変数の値。
-      mountPoints:
-        type: array
-        description: コンテナのマウントポイントのリスト。
-        items:
-          type: object
-          required:
-            - volumeSize
-            - target
-          properties:
-            volumeSize:
-              type: integer
-              maximum: 100
-              minimum: 1
-              description: マウントするボリュームのサイズ（GiB単位）
-            target:
-              type: string
-              description: コンテナ側のパス。
-    additionalProperties: false
+    env:
+      type: array
+      description: コンテナの環境変数のリスト。
+      items:
+        type: object
+        required:
+          - name
+          - value
+        properties:
+          name:
+            type: string
+            description: 環境変数の名前。
+          value:
+            type: string
+            description: 環境変数の値。
+    mountPoints:
+      type: array
+      description: コンテナのマウントポイントのリスト。
+      items:
+        type: object
+        required:
+          - volumeSize
+          - target
+        properties:
+          volumeSize:
+            type: integer
+            maximum: 100
+            minimum: 1
+            description: マウントするボリュームのサイズ（GiB単位）
+          target:
+            type: string
+            description: コンテナ側のパス。
   singleton:
     description: |-
       このサービスがシングルトンであるかどうかを示すフラグ。デフォルトは false です。
@@ -121,21 +123,12 @@ properties:
     type: boolean
     example: true
   provider:
-    type: array
-    description: |-
-      サービスの提供者の識別子（クライアント証明書の subject の値）です。<br/>
-      urn:chip-in:end-point:{zone}:{domain}:{name}
-    items:
-      type: string
-      format: urn
-    example:
-      - oidc-idp-1
-      - oidc-idp-2
+    type: string
+    description: サービスの提供者の識別子（クライアント証明書の subject のCN値）です
+    example: urn:chip-in:end-point:{zone}:{domain}:{name}
   consumers:
     type: array
-    description: |-
-      サービスの消費者の識別子（クライアント証明書の subject の値）のリスト。URNは、<br/>
-      urn:chip-in:end-point:{zone}:{domain}:{name}
+    description: サービスの消費者の識別子（クライアント証明書の subject のCN値）のリスト。
     items:
       type: string
       format: urn
