@@ -10,7 +10,7 @@ properties:
   type:
     type: string
     enum: [redirect]
-  target:
+  url:
     type: string
     description: |-
       レスポンスの Location ヘッダに設定されるリダイレクト先のURL。

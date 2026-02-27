@@ -4,7 +4,8 @@ required:
   - title
   - cacert
   - disabled
-  - signingKey
+  - deviceIDSigningKey
+  - deviceIDVerificationKey
 description: |-
   レルムは、SPN内の論理的なグループであり、ゾーンやサブドメイン、仮想ホストなどのリソースを分離して管理するためのコンテナです。
   各レルムは、独自の設定や管理者を持ち、セキュリティやアクセス制御のために使用されます。
@@ -42,13 +43,22 @@ properties:
       MIIDXTCCAkWgAwIBAgIJAL5z1Z2k5b4wMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
       ...
       -----END CERTIFICATE-----
-  signingKey:
+  deviceIDSigningKey:
     type: string
-    minLength: 24
     description: |-
-      realm 配下のAPI Gateway でセッショントークンの署名に使用されるパスワード。
-      使用できる文字は英字、数字、ハイフン、アンダースコアのみである。
-    example: wUAMEUxCzAJBg1m4uS38-2__
+      realm 配下のDevice IDの署名に使用される秘密鍵(PEM形式)
+    example: |-
+          -----BEGIN PRIVATE KEY-----
+          MIIEvg...
+          -----END PRIVATE KEY-----
+  deviceIDVerificationKey:
+    type: string
+    description: |-
+      realm 配下のDevice IDの署名確認に使用される公開鍵(PEM形式)
+    example: |-
+          -----BEGIN PUBLIC KEY-----
+          MIIBIj...
+          -----END PUBLIC KEY-----
   sessionTimeout:
     type: integer
     description: |-

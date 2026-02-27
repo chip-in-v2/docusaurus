@@ -57,12 +57,9 @@ properties:
           example: "hostname.equals('api.example.com') and request.path.starts_with('/token/')"
         action:
           oneOf:
-            - $ref: './SetDeviceId.yaml'
-            - $ref: './CheckoutServices.yaml'
             - $ref: './Proxy.yaml'
             - $ref: './Redirect.yaml'
-            - $ref: './Jump.yaml'
-            - $ref: './SetVariables.yaml'
-            - $ref: './SetHeaders.yaml'
-            - $ref: './Authentication.yaml'
+            - $ref: './RequireAuthentication.yaml'
+            - $ref: './SetDownstreamResponseHeaders.yaml'
+            - $ref: './SetUpstreamRequestHeaders.yaml'
 additionalProperties: false
