@@ -2,12 +2,14 @@ import ApiSchema from '@theme/ApiSchema';
 
 # api-gateway コマンド
 
-api-gateway コマンドは API Gateway を実装します。spnhub コマンドのパラメータはコマンドラインオプションと環境変数のいずれかで指定できます。
+api-gateway コマンドは API Gateway を実装します。api-gateway コマンドのパラメータは環境変数で指定できます。
 パラメータには以下のものがあります。
 
-|オプション|環境変数名|説明|デフォルト|
-|--|--|--|--|
-|-c |APIGW_INVENTORY_URL| API Gateway の構成情報を提供するインベントリのURL。|http://localhost:8080|
+|環境変数名|説明|デフォルト|
+|--|--|--|
+|APIGW_INVENTORY_URL| API Gateway の構成情報を提供するインベントリのURL。|http://localhost:8080|
+|APIGW_TLS_BIND_ADDRESS| API Gateway が TLSをlisten するバインドアドレス。|0.0.0.0:8443|
+|APIGW_HTTP_BIND_ADDRESS| API Gateway が HTTPをlisten するバインドアドレス。|0.0.0.0:8080|
 
 api-gateway コマンドは起動時とリロードシグナル受信時に構成情報を[インベントリ](/docs/devSpecification/inventory-openapi) から読み込みます。具体的には以下の順に読み込みます。リロードシグナルは SIGUSR1 です。
 
@@ -43,8 +45,6 @@ API Gateway はレルムごとに内部が分離されており、マルチテ�
 {/*
 <ApiSchema id="inventory" pointer="#/components/schemas/Subdomain" />
 */}
-
-disabled が True のものは無視されます。
 
 ## 4. 仮想ホストの読み込み
 
