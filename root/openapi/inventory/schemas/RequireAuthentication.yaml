@@ -11,8 +11,9 @@ required:
   - authScopeName
   - protectedUpstream
   - oidcClientId
+  - oidcClientSecret
   - oidcAuthorizationEndpoint
-  - oidcRecirectUrl
+  - oidcRedirectUrl
   - oidcTokenEndpoint
 properties:
   type:
@@ -33,12 +34,17 @@ properties:
     description: |-
       セッション情報を取得するために使用する OIDC クライアントのIDを指定します。
     example: chipin-web
+  oidcClientSecret:
+    type: string
+    description: |-
+      OIDC クライアントのシークレットを指定します。
+    example: shop-client-secret
   oidcAuthorizationEndpoint:
     type: string
     description: |-
       OIDC IdP の認可エンドポイントのURLを指定します。
     example: https://auth.example.com/auth/realms/chip-in/protocol/openid-connect/auth
-  oidcRecirectUrl:
+  oidcRedirectUrl:
     type: string
     description: |-
       OIDC の認可コードフローにおけるリダイレクトURLを指定します。

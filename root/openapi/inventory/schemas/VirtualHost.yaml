@@ -7,7 +7,6 @@ required:
   - name
   - title
   - subdomain
-  - routingChain
 properties:
   name:
     type: string
@@ -48,12 +47,6 @@ properties:
       たとえば、 www という仮想ホスト名でサブドメインの FQDN が stg.example.com の場合、FQDN は www.stg.example.com となる。
       サブドメインは自身のレルムに属するものかサブドメインの貸出先に自身のレルムが指定されているものでなくてはならない。
     example: urn:chip-in:subdomain:example-realm:stg
-  routingChain:
-    type: string
-    description: |-
-      この仮想ホストに紐づくルーティングチェーンのURN。
-      ルーティングチェーンは、リクエストの処理を行うためのルールの集合であり、リクエストを適切なマイクロサービスに転送するためのロジックを定義する。
-    example: urn:chip-in:routing-chain:example-realm:cms-chain
   accessLogRecorder:
     type: string
     description: |-
@@ -98,17 +91,15 @@ properties:
         また、値が文字列であり、かつ、その長さが maxValueLength を超える場合は切り捨てられ、最後に "...truncated" が付加される。
         数値や booleanの場合はそのまま出力される。オブジェクトや配列の場合は、JSON文字列に変換されて出力される。
   certificate:
-    type: array
-    items:
-      type: string
-      description: |-
-        この仮想ホストのサーバ証明書。PEM形式の証明書を指定する。
-        証明書は、HTTPS通信を行うために必要であり、仮想ホストが提供するサービスのセキュリティを確保する。
-      example: |-
-        -----BEGIN CERTIFICATE-----
-        MIIDXTCCAkWgAwIBAgIJAL5z1Z2k5b4wMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
-        ...
-        -----END CERTIFICATE-----
+    type: string
+    description: |-
+      この仮想ホストのサーバ証明書。PEM形式の証明書を指定する。
+      証明書は、HTTPS通信を行うために必要であり、仮想ホストが提供するサービスのセキュリティを確保する。
+    example: |-
+      -----BEGIN CERTIFICATE-----
+      MIIDXTCCAkWgAwIBAgIJAL5z1Z2k5b4wMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
+      ...
+      -----END CERTIFICATE-----
   key:
     type: string
     description: |-

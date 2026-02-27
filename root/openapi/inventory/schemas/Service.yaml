@@ -49,72 +49,66 @@ properties:
       - serviceId
     description: |-
       このサービスのアベイラビリティ(主に自動起動と停止)の説明です。
-    clusterManagerUrn:
-      type: string
-      description: このサービスを起動できるコンテナクラスタのクラスタマネージャサービスの URN
-    serviceId:
-      type: string
-      description: クラスタ内でのマイクロサービスのID
-    startAt:
-      type: string
-      description: 定時起動する場合の起動スケジュールの CRON 式
-      example: 0 22 ? * SUN-THU *
-    stopAt:
-      type: string
-      description: 定時停止する場合の起動スケジュールの CRON 式
-      example: 0 9 ? * MON-FRI *
-    ondemandStartOnConsumer:
-      type: boolean
-      description: オンデマンド起動とするか否か。トリガはコンシューマの準備完了。デフォルトは true
-    ondemandStartOnPayload:
-      type: boolean
-      description: オンデマンド起動とするか否か。トリガはコンシューマ側の最初のペイロード。デフォルトは true
-    idleTimeout:
-      type: integer
-      description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
-    image:
-      type: string
-      description: コンテナイメージのパスとタグ
-    command:
-      type: string
-      description: コンテナの起動時に実行するコマンド。
-    option:
-      type: array
-      description: コンテナの起動時に実行するコマンドの引数のリスト。
-      items:
+    properties:
+      clusterManagerUrn:
         type: string
-    env:
-      type: array
-      description: コンテナの環境変数のリスト。
-      items:
+        description: このサービスを起動できるコンテナクラスタのクラスタマネージャサービスの URN
+      serviceId:
+        type: string
+        description: クラスタ内でのマイクロサービスのID
+      description:
+        type: string
+        description: サービスの説明文です。
+      startAt:
+        type: string
+        description: 定時起動する場合の起動スケジュールの CRON 式
+        example: 0 22 ? * SUN-THU *
+      stopAt:
+        type: string
+        description: 定時停止する場合の起動スケジュールの CRON 式
+        example: 0 9 ? * MON-FRI *
+      ondemandStartOnConsumer:
+        type: boolean
+        description: オンデマンド起動とするか否か。トリガはコンシューマの準備完了。デフォルトは true
+      ondemandStartOnPayload:
+        type: boolean
+        description: オンデマンド起動とするか否か。トリガはコンシューマ側の最初のペイロード。デフォルトは true
+      idleTimeout:
+        type: integer
+        description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
+      image:
+        type: string
+        description: コンテナイメージのパスとタグ
+      command:
+        type: string
+        description: コンテナの起動時に実行するコマンド。
+      options:
+        type: array
+        description: コンテナの起動時に実行するコマンドの引数のリスト。
+        items:
+          type: string
+      env:
         type: object
-        required:
-          - name
-          - value
-        properties:
-          name:
-            type: string
-            description: 環境変数の名前。
-          value:
-            type: string
-            description: 環境変数の値。
-    mountPoints:
-      type: array
-      description: コンテナのマウントポイントのリスト。
-      items:
-        type: object
-        required:
-          - volumeSize
-          - target
-        properties:
-          volumeSize:
-            type: integer
-            maximum: 100
-            minimum: 1
-            description: マウントするボリュームのサイズ（GiB単位）
-          target:
-            type: string
-            description: コンテナ側のパス。
+        description: コンテナの環境変数のリスト。キーと値のペアで指定します。
+        additionalProperties:
+          type: string
+      mountPoints:
+        type: array
+        description: コンテナのマウントポイントのリスト。
+        items:
+          type: object
+          required:
+            - volumeSize
+            - target
+          properties:
+            volumeSize:
+              type: integer
+              maximum: 100
+              minimum: 1
+              description: マウントするボリュームのサイズ（GiB単位）
+            target:
+              type: string
+              description: コンテナ側のパス。
   singleton:
     description: |-
       このサービスがシングルトンであるかどうかを示すフラグ。デフォルトは false です。
