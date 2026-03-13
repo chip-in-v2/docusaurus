@@ -75,7 +75,7 @@ properties:
         description: オンデマンド起動とするか否か。トリガはコンシューマ側の最初のペイロード。デフォルトは true
       idleTimeout:
         type: integer
-        description: 指定された秒数通信がない状態が続くとサービスをシャットダウンする。 ondemandStart が true の場合のみ有効
+        description: 指定された秒数通信がない状態が続くとプロバイダをシャットダウンする。 ondemandStart が true の場合のみ有効。 ただし、0は自動シャットダウンしない。
       image:
         type: string
         description: コンテナイメージのパスとタグ
