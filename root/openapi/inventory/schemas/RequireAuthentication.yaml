@@ -54,4 +54,9 @@ properties:
     description: |-
       OIDC IdP のトークンエンドポイントのURLを指定します。
     example: https://auth.example.com/auth/realms/chip-in/protocol/openid-connect/token
+  oidcDialect:
+    type: string
+    enum: [google]
+    description: |-
+      OIDCプロバイダ毎の特殊な振る舞いに対応します。
 additionalProperties: false
