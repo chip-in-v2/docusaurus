@@ -16,11 +16,11 @@ pub async fn create_spn_consumer_endpoint(
 ```
 
 - **引数**
-  - `spn_hub_url`: SPN ハブの URL
+  - `spn_hub_url`: SPN Hubの URL
   - `cert_path`: PEM形式のクライアント証明書のパス
   - `key_path`: PEM形式のクライアント証明書の秘密鍵のパス
   - `trust_store_path`: 信頼するCA証明書のパス
-- **戻り値**  
+- **戻り値**
   SPN セッションが確立された `SpnConsumerEndpoint` 構造体。エラー時は `Box<dyn Error>`。
 - **主なエラー例**
   - クライアント証明書の読み込み失敗
@@ -28,6 +28,9 @@ pub async fn create_spn_consumer_endpoint(
   - SPN Hub からの拒否
 
 ### `SpnConsumerEndpoint` 構造体
+
+`spn_hub_url` のホスト名をDNS解決し、返された全てのIPアドレスに対してSPNセッションを確立します。
+これにより、SPN Hubがマルチインスタンスで構成されている場合でも、自動的に複数のセッションを張り、可用性を高めます。
 
 - **メソッド**
   - `pub async fn open_stream(&self) -> Result<QuicBidiStream, Box<dyn Error + Send + Sync>>`
@@ -143,11 +146,11 @@ pub async fn create_spn_provider_endpoint(
 ```
 
 - **引数**
-  - `spn_hub_url`: SPN ハブの URL
+  - `spn_hub_url`: SPN Hubの URL
   - `cert_path`: PEM形式のクライアント証明書のパス
   - `key_path`: PEM形式のクライアント証明書の秘密鍵のパス
   - `trust_store_path`: 信頼するCA証明書のパス
-- **戻り値**  
+- **戻り値**
   SPN セッションが確立された `SpnProviderEndpoint` 構造体。エラー時は `Box<dyn Error>`。
 - **主なエラー例**
   - プロバイダ証明書の読み込み失敗
@@ -155,6 +158,9 @@ pub async fn create_spn_provider_endpoint(
   - SPN Hub からの拒否
 
 ### `SpnProviderEndpoint` 構造体
+
+`spn_hub_url` のホスト名をDNS解決し、返された全てのIPアドレスに対してSPNセッションを確立します。
+これにより、SPN Hubがマルチインスタンスで構成されている場合でも、自動的に複数のセッションを張り、可用性を高めます。
 
 - **メソッド**
   - `pub async fn accept_stream(&self) -> Result<QuicBidiStream, Box<dyn Error>>`
@@ -203,8 +209,6 @@ loop {
 use std::sync::Arc;
 use tokio::sync::Mutex;
 use ep_lib::core::create_spn_consumer_endpoint;
-
-# async fn example() -> Result<(), Box<dyn std::error::Error>> {
 let endpoint = create_spn_consumer_endpoint(
     "https://spn-hub.example.com:4433",
     "/path/to/cert.pem",
@@ -231,6 +235,4 @@ for i in 0..5 {
         }
     });
 }
-# Ok(())
-# }
 ```
