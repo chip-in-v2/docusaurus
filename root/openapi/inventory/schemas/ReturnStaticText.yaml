@@ -1,0 +1,22 @@
+type: object
+title: ReturnStaticText
+required:
+  - type
+  - content
+  - status
+description: |-
+  静的なテキストを返却するアクション。
+  指定されたステータスコードとコンテンツでレスポンスを返し、リクエスト処理を終了します。
+properties:
+  type:
+    type: string
+    enum: [returnStaticText]
+  content:
+    type: string
+    description: レスポンスボディとして返却する固定の文字列。
+    example: "User-agent: *\nDisallow: /"
+  status:
+    type: integer
+    description: HTTPステータスコード。
+    example: 200
+additionalProperties: false
